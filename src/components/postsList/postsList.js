@@ -11,11 +11,12 @@ function PostsList() {
 
   return (
     <List
+      pagination={{ align: 'center' }}
       className={styles['posts-list']}
       grid={{ column: 1 }}
       dataSource={posts}
       renderItem={(post) => (
-        <List.Item key={post.id}>
+        <List.Item>
           <PostsItem post={post} />
         </List.Item>
       )}

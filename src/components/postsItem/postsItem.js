@@ -1,46 +1,46 @@
 import React from 'react'
 import { Card, Avatar, Tag, Space } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 import styles from './postsItem.module.scss'
 
-function PostsItem({ post }) {
-  const acountDescription = ({ auther }) => (
-    <div className={styles['person-info']}>
-      <div className={styles['person-info__description']}>
-        <div>{auther}</div>
-        <div>15 March</div>
-      </div>
-      <Avatar className={styles['person-info__avatar']} icon={<UserOutlined />} size={42} />
-    </div>
+export const renderTags = ({ tags }) => {
+  let id = 1
+  const renderedTags = tags.map((tag) => (
+    <Tag key={id++} className={styles.tag}>
+      <a href="#top">{tag}</a>
+    </Tag>
+  ))
+
+  return (
+    <Space size={1} className={styles['posts-item__tags']}>
+      {renderedTags}
+    </Space>
   )
+}
 
-  const renderTags = ({ tags }) => {
-    let id = 1
-    const renderedTags = tags.map((tag) => (
-      <Tag key={id++} className={styles.tag}>
-        <a href="#top">{tag}</a>
-      </Tag>
-    ))
+export const acountDescription = ({ auther }) => (
+  <div className={styles['person-info']}>
+    <div className={styles['person-info__description']}>
+      <div>{auther}</div>
+      <div>15 March</div>
+    </div>
+    <Avatar className={styles['person-info__avatar']} icon={<UserOutlined />} size={42} />
+  </div>
+)
 
-    return (
-      <Space size={1} className={styles['posts-item__tags']}>
-        {renderedTags}
-      </Space>
-    )
-  }
-
+function PostsItem({ post }) {
   return (
     <Card
       bordered={false}
       className={styles['posts-item']}
-      hoverable
       extra={acountDescription(post)}
       title={
-        <Space direction="vertical">
-          <a href="#top" className={styles['posts-item__title']}>
+        <Space size={4} direction="vertical">
+          <Link className={styles['posts-item__title']} to={`/articles/${post.id}`}>
             {post.title}
-          </a>
+          </Link>
           {renderTags(post)}
         </Space>
       }

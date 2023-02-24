@@ -11,9 +11,11 @@
     "antd": "^5.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.5",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
+    "remark-gfm": "^3.0.1",
     "sass": "^1.58.3",
     "web-vitals": "^2.1.4"
   },
@@ -24,15 +26,15 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-	 "format": "npx prettier --write .",
+    "format": "npx prettier --write .",
     "prepare": "husky install"
   },
   "lint-staged": {
-	"**/*.{js,jsx}": [
-	  "npm run lint:fix",
-	  "npm run format"
-	]
- },
+    "**/*.{js,jsx}": [
+      "npm run lint:fix",
+      "npm run format"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
