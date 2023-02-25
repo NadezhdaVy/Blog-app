@@ -1,15 +1,13 @@
-
-.posts-item {
+.articles-item {
   padding: 1em 1.2em;
-  margin-top: .5em;
-  background-color: rgba(255,255,255);
+  margin-top: 0.5em;
+  background-color: rgba(255, 255, 255);
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
 
-
-//height: 150px;
+  //height: 150px;
 
   &__title {
-    color: #66ADD9;
+    color: #66add9;
     font-size: 20px;
   }
 
@@ -20,20 +18,19 @@
     .tag {
       background-color: white;
       border-color: #112430;
-		border-radius: 0;
-		border-radius: 2px;
+      border-radius: 0;
+      border-radius: 2px;
 
-		& > a {
-			color: #39454e;
-		}
-	}
-
+      & > a {
+        color: #39454e;
+      }
+    }
   }
 
   &__content {
     max-width: 80%;
-	 margin: 0;
-	 min-height: 70px;
+    margin: 0;
+    min-height: 70px;
   }
 
   .person-info {
@@ -50,7 +47,6 @@
       & > div:last-child {
         display: flex;
         justify-content: flex-end;
-     
       }
     }
 

@@ -1,9 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
+import registerForm from '../registerForm'
 import Navbar from '../navbar'
-import PostsDetails from '../postsDetails'
-import PostsList from '../postsList'
+import ArticleDetails from '../articleDetails'
+import ArticlesList from '../articlesList'
+import loginForm from '../loginForm'
 
 import styles from './app.module.scss'
 
@@ -13,8 +15,10 @@ function App() {
       <Navbar />
       <div className={styles.app}>
         <Switch>
-          <Route exact path="/" render={() => <PostsList />} />
-          <Route exact path="/articles/:articleId" component={PostsDetails} />
+          <Route exact path="/" render={() => <ArticlesList />} />
+          <Route exact path="/articles/:slug" component={ArticleDetails} />
+          <Route exact path="/sign-up" component={registerForm} />
+          <Route exact path="/log-in" component={loginForm} />
           <Redirect to="/" />
         </Switch>
       </div>

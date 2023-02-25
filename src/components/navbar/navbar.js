@@ -9,8 +9,8 @@ function Navbar() {
       <div className={styles['nav-content']}>
         <div className={styles['nav-links']}>
           <Link to="/">Realworld Blog</Link>
-          <a href="#top">Sign in</a>
-          <a href="#top">Sign up</a>
+          <Link to="/log-in">Sign in</Link>
+          <Link to="/sign-up">Sign up</Link>
         </div>
       </div>
     </nav>

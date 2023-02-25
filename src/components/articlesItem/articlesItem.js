@@ -3,51 +3,51 @@ import { Card, Avatar, Tag, Space } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-import styles from './postsItem.module.scss'
+import styles from './articlesItem.module.scss'
 
-export const renderTags = ({ tags }) => {
+export const renderTags = ({ tagList }) => {
   let id = 1
-  const renderedTags = tags.map((tag) => (
+  const renderedTags = tagList.map((tag) => (
     <Tag key={id++} className={styles.tag}>
       <a href="#top">{tag}</a>
     </Tag>
   ))
 
   return (
-    <Space size={1} className={styles['posts-item__tags']}>
+    <Space size={1} className={styles['articles-item__tags']}>
       {renderedTags}
     </Space>
   )
 }
 
-export const acountDescription = ({ auther }) => (
+export const acountDescription = ({ author }) => (
   <div className={styles['person-info']}>
     <div className={styles['person-info__description']}>
-      <div>{auther}</div>
+      <div>{author.username}</div>
       <div>15 March</div>
     </div>
     <Avatar className={styles['person-info__avatar']} icon={<UserOutlined />} size={42} />
   </div>
 )
 
-function PostsItem({ post }) {
+function ArticlesItem({ article }) {
   return (
     <Card
       bordered={false}
-      className={styles['posts-item']}
-      extra={acountDescription(post)}
+      className={styles['articles-item']}
+      extra={acountDescription(article)}
       title={
         <Space size={4} direction="vertical">
-          <Link className={styles['posts-item__title']} to={`/articles/${post.id}`}>
-            {post.title}
+          <Link className={styles['articles-item__title']} to={`/articles/${article.slug}`}>
+            {article.title}
           </Link>
-          {renderTags(post)}
+          {renderTags(article)}
         </Space>
       }
     >
-      <p className={styles['posts-item__content']}>{post.content.substring(0, 100)}</p>
+      <p className={styles['posts-item__content']}>{article.description}</p>
     </Card>
   )
 }
 
-export default PostsItem
+export default ArticlesItem
