@@ -1,7 +1,9 @@
 import React from 'react'
 import { Card, Avatar, Tag, Space } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+
+import convertTime from '../../utils/formatDate'
+import RateItem from '../rateItem'
 
 import styles from './articlesItem.module.scss'
 
@@ -20,13 +22,13 @@ export const renderTags = ({ tagList }) => {
   )
 }
 
-export const acountDescription = ({ author }) => (
+export const acountDescription = ({ author, updatedAt }) => (
   <div className={styles['person-info']}>
     <div className={styles['person-info__description']}>
       <div>{author.username}</div>
-      <div>15 March</div>
+      <div>{convertTime(updatedAt)}</div>
     </div>
-    <Avatar className={styles['person-info__avatar']} icon={<UserOutlined />} size={42} />
+    <Avatar className={styles['person-info__avatar']} src={author.image} size={42} />
   </div>
 )
 
@@ -38,9 +40,12 @@ function ArticlesItem({ article }) {
       extra={acountDescription(article)}
       title={
         <Space size={4} direction="vertical">
-          <Link className={styles['articles-item__title']} to={`/articles/${article.slug}`}>
-            {article.title}
-          </Link>
+          <Space size={10}>
+            <Link className={styles['articles-item__title']} to={`/articles/${article.slug}`}>
+              {article.title}
+            </Link>
+            <RateItem stars={article.favoritesCount} />
+          </Space>
           {renderTags(article)}
         </Space>
       }

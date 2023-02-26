@@ -1,11 +1,19 @@
 import React from 'react'
 import { Button, Form, Input } from 'antd'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { loginUser } from '../../redux/slices/authSlice'
 
 import styles from './loginForm.module.scss'
 
 const loginForm = () => {
+  const dispath = useDispatch()
+
+  const { error } = useSelector((state) => state.auth)
+  console.log(error)
   const onFinish = (values) => {
+    dispath(loginUser(values))
     console.log('Received values of form: ', values)
   }
   return (

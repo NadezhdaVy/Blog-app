@@ -22,6 +22,10 @@ function ArticlesList() {
 
   useEffect(() => {
     dispath(fetchArticles(currentPage))
+  }, [])
+
+  useEffect(() => {
+    dispath(fetchArticles(currentPage))
   }, [currentPage])
 
   return (

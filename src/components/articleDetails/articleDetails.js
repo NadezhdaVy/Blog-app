@@ -11,13 +11,11 @@ import styles from './articleDetails.module.scss'
 function ArticleDetails({ match }) {
   const { slug } = match.params
   const item = useSelector((state) => selectArticleById(state, slug))
-
   return (
     <div className={styles.articleDetails}>
       <ArticlesItem article={item} />
       <div className={styles['articleDetails-body']}>
-        {' '}
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>po</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.body}</ReactMarkdown>
       </div>
     </div>
   )

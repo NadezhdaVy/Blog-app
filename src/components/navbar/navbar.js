@@ -9,7 +9,7 @@ function Navbar() {
       <div className={styles['nav-content']}>
         <div className={styles['nav-links']}>
           <Link to="/">Realworld Blog</Link>
-          <Link to="/log-in">Sign in</Link>
+          <Link to="/log-in">Log in</Link>
           <Link to="/sign-up">Sign up</Link>
         </div>
       </div>

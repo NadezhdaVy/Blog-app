@@ -1,13 +1,15 @@
 import { Button, Form, Input, Checkbox } from 'antd'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { registerUser } from '../../redux/slices/authSlice'
 
 import styles from './registerForm.module.scss'
 
 function registerForm() {
+  const location = useLocation()
+  console.log(location)
   const dispatch = useDispatch()
   const [form] = Form.useForm()
 

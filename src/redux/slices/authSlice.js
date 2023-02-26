@@ -39,6 +39,32 @@ export const registerUser = createAsyncThunk(
   }
 )
 
+export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`${baseUrl}/api/users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: {
+          email,
+          password,
+        },
+      }),
+    })
+    const data = await response.json()
+    console.log('data', data)
+    if (response.status === 200) {
+      localStorage.setItem('token', data.token)
+      return data
+    }
+    return rejectWithValue(data)
+  } catch (e) {
+    return rejectWithValue(e.response.data)
+  }
+})
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -54,6 +80,18 @@ const authSlice = createSlice({
         state.userToken = action.payload.token
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.payload
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.userInfo.user = action.payload
+        state.userToken = action.payload.token
+      })
+      .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.payload
       })

@@ -8,7 +8,7 @@ const initialState = {
 }
 
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset = 1) => {
-  const response = await fetch(`https://blog.kata.academy/api/articles?limit=10&offset=${offset}`)
+  const response = await fetch(`https://blog.kata.academy/api/articles?limit=10&limit=10&offset=${offset}`)
   const body = await response.json()
   return body
 })
