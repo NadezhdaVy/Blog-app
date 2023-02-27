@@ -1,8 +1,10 @@
 .loginForm-container {
   justify-content: center;
+  flex-direction: column;
+
+  align-items: center;
   display: flex;
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding: 2em;
 
   .loginForm-inner {
     background-color: white;
@@ -20,6 +22,7 @@
     .loginForm {
       &__input {
         padding: 0.5em;
+		  min-width: 260px;
       }
 
       &__button {

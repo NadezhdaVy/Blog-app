@@ -1,17 +1,24 @@
 import { Button, Form, Input, Checkbox } from 'antd'
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
 
-import { registerUser } from '../../redux/slices/authSlice'
+import { registerUser, clearState } from '../../redux/slices/authSlice'
 
 import styles from './registerForm.module.scss'
 
 function registerForm() {
-  const location = useLocation()
-  console.log(location)
+  const history = useHistory()
+  const { status } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      dispatch(clearState())
+      history.push('/')
+    }
+  }, [status])
 
   // const { error } = useSelector((state) => state.auth)
   const onFinish = (values) => {
