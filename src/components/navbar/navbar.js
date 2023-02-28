@@ -17,7 +17,7 @@ function LoggenInLinks({ user: { user } }) {
   }
   return (
     <>
-      <Link className={styles['create-article']} to="/log-in">
+      <Link className={styles['create-article']} to="/new-article">
         Create article
       </Link>
       <Link to="/profile">

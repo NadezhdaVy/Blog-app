@@ -11,6 +11,7 @@ import loginForm from '../loginForm'
 import UpdateProfileForm from '../updateProfileForm'
 import ErrorIndicator from '../errorIndicator'
 import PrivateRoute from '../privateRoute'
+import NewArticle from '../newArticle'
 
 import styles from './app.module.scss'
 
@@ -37,6 +38,10 @@ function App() {
           <PrivateRoute path="/profile">
             <UpdateProfileForm />
           </PrivateRoute>
+          <PrivateRoute path="/new-article">
+            <NewArticle />
+          </PrivateRoute>
+
           <Redirect to="/" />
         </Switch>
       </div>

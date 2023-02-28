@@ -79,7 +79,23 @@ function UpdateProfileForm() {
           >
             <Input.Password className={styles.updateProfileForm__input} placeholder="New password" />
           </Form.Item>
-          <Form.Item name="image" label="Avatar image(url)">
+          <Form.Item
+            name="image"
+            label="Avatar image(url)"
+            rules={[
+              {
+                required: true,
+              },
+              {
+                type: 'url',
+                warningOnly: true,
+              },
+              {
+                type: 'string',
+                min: 6,
+              },
+            ]}
+          >
             <Input className={styles.updateProfileForm__input} placeholder="avatar" />
           </Form.Item>
           <Form.Item>
