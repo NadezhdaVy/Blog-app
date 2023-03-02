@@ -2,30 +2,41 @@
 import React, { useEffect } from 'react'
 import { Input, Form, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { fetchArticle } from '../../redux/slices/articlesSlice'
+import { selectArticleById, fetchArticle } from '../../redux/slices/articlesSlice'
 
 import styles from './newArticle.module.scss'
 
-function NewArticle() {
+function NewArticle({ formName }) {
+  const { slug } = useParams()
+  const item = useSelector((state) => selectArticleById(state, slug))
+  const history = useHistory()
+
+  const [form] = Form.useForm()
   const dispatch = useDispatch()
   const onFinish = (values) => {
     console.log(values)
-    dispatch(fetchArticle(values))
+    if (formName === 'Create new article') {
+      dispatch(fetchArticle(values))
+    }
+    form.resetFields()
   }
-  const { error, status } = useSelector((state) => state.articles)
+  const { status } = useSelector((state) => state.articles)
   useEffect(() => {
-    console.log(error)
-    console.log(status)
-  }, [status])
-  const [form] = Form.useForm()
+    if (formName === 'Edit article' && !item) {
+      history.push('/')
+    }
+  }, [status, formName])
 
-  console.log(error)
-  console.log(status)
+  const initialValues = item
+    ? { title: item.title, tagList: item.tagList, description: item.description, body: item.body }
+    : { tagList: ['programming'] }
+
   return (
     <div className={styles['newArticle-container']}>
       <div className={styles['newArticle-main']}>
-        <h1 className={styles.newArticle__title}>Create new article</h1>
+        <h1 className={styles.newArticle__title}>{formName}</h1>
         <Form
           form={form}
           className={styles.NewArticle}
@@ -33,10 +44,10 @@ function NewArticle() {
           name="newArticle"
           onFinish={onFinish}
           style={{ maxWidth: 600 }}
-          initialValues={{ tagList: ['programming'] }}
+          initialValues={initialValues}
           requiredMark={false}
         >
-          <Form.Item name="title" label="Title" rules={[{ min: 3, max: 30, required: true, whitespace: true }]}>
+          <Form.Item name="title" label="Title" rules={[{ min: 3, max: 60, required: true, whitespace: true }]}>
             <Input className={styles.newArticle__input} />
           </Form.Item>
           <Form.Item name="description" label="Short description">

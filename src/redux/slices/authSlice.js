@@ -107,6 +107,7 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (value
       }),
     })
     const data = await response.json()
+
     if (response.status === 200) {
       return data
     }
@@ -171,10 +172,10 @@ const authSlice = createSlice({
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.userInfo.user = action.payload.user
-        console.log(action.payload.user)
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.status = 'failed'
+
         state.error = action.payload.errors
       })
   },

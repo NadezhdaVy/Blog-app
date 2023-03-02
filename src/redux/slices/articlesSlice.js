@@ -8,7 +8,7 @@ const initialState = {
 }
 const baseUrl = 'https://blog.kata.academy'
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset = 1) => {
-  const response = await fetch(`${baseUrl}/api/articles?limit=10&limit=10&offset=${offset}`)
+  const response = await fetch(`${baseUrl}/api/articles?limit=10&offset=${offset}`)
   const body = await response.json()
   return body
 })
@@ -56,7 +56,7 @@ const articlesSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchArticle.fulfilled, (state) => {
-        state.status = 'succeeded'
+        state.status = 'idle'
       })
       .addCase(fetchArticle.rejected, (state, action) => {
         state.status = 'failed'

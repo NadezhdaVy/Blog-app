@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Avatar, Tag, Space } from 'antd'
+import { Card, Avatar, Tag, Space, Button } from 'antd'
 import { Link } from 'react-router-dom'
 
 import convertTime from '../../utils/formatDate'
@@ -50,7 +50,16 @@ function ArticlesItem({ article }) {
         </Space>
       }
     >
-      <p className={styles['posts-item__content']}>{article.description}</p>
+      <div className={styles['articles-item-container']}>
+        <p className={styles['articles-item__content']}>{article.description}</p>
+        <Space className={styles.buttons}>
+          <Button>Delete</Button>
+
+          <Link to={`/articles/${article.slug}/edit`}>
+            <Button>Edit</Button>
+          </Link>
+        </Space>
+      </div>
     </Card>
   )
 }

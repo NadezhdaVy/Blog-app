@@ -6,6 +6,37 @@
 
   //height: 150px;
 
+  .articles-item-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 70px;
+  }
+
+  .buttons {
+	display: none;
+	padding-left: 1em;
+div:first-child {
+	button {
+		border-color: red;
+		span{
+			color: red;
+		
+		}
+	} 
+}  
+
+div:last-child {
+	button {
+		border-color: #99a63c;
+		span{
+			color: #99a63c;
+		
+		}
+	} 
+}
+  }
+
   &__title {
     color: #66add9;
     font-size: 20px;
@@ -30,7 +61,6 @@
   &__content {
     max-width: 80%;
     margin: 0;
-    min-height: 70px;
   }
 
   .person-info {

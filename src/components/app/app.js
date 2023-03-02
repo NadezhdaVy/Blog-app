@@ -9,7 +9,6 @@ import ArticleDetails from '../articleDetails'
 import ArticlesList from '../articlesList'
 import loginForm from '../loginForm'
 import UpdateProfileForm from '../updateProfileForm'
-import ErrorIndicator from '../errorIndicator'
 import PrivateRoute from '../privateRoute'
 import NewArticle from '../newArticle'
 
@@ -18,18 +17,17 @@ import styles from './app.module.scss'
 function App() {
   const dispath = useDispatch()
   const { userToken } = useSelector((state) => state.auth)
-  const { error } = useSelector((state) => state.auth)
+
   useEffect(() => {
     if (userToken) {
       dispath(getCurrentUserBytoken())
     }
   }, [])
-  const errorMessage = error ? <ErrorIndicator error={error} /> : null
+
   return (
     <Router>
       <Navbar />
       <div className={styles.app}>
-        {errorMessage}
         <Switch>
           <Route exact path="/" render={() => <ArticlesList />} />
           <Route exact path="/articles/:slug" component={ArticleDetails} />
@@ -39,7 +37,10 @@ function App() {
             <UpdateProfileForm />
           </PrivateRoute>
           <PrivateRoute path="/new-article">
-            <NewArticle />
+            <NewArticle formName="Create new article" />
+          </PrivateRoute>
+          <PrivateRoute exact path="/articles/:slug/edit">
+            <NewArticle formName="Edit article" />
           </PrivateRoute>
 
           <Redirect to="/" />
