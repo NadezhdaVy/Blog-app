@@ -12,9 +12,9 @@
 
   background-color: white;
 
- & > div:first-child > div:last-child > div > div {
-	display:flex;
- }
+  & > div:first-child > div:last-child > div > div {
+    display: flex;
+  }
 
   & > div:first-child {
     padding: 0;
@@ -23,23 +23,21 @@
     p {
       color: rgba(0, 0, 0, 0.5);
       min-height: 0;
-		max-width: 75%;
+      max-width: 75%;
     }
-	}
-
-  .article-body {
-	p,
-	h2,
-	h1,
-	li {
-	  color: rgba(0, 0, 0, 0.75);
-	}
   }
 
+  .article-body {
+    p,
+    h2,
+    h1,
+    li {
+      color: rgba(0, 0, 0, 0.75);
+    }
+  }
 }
 
 .spinner {
-
-	width: 100%;
-	margin-top: 5em;
-  }
+  width: 100%;
+  margin-top: 5em;
+}

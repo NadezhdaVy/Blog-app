@@ -1,35 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { useSelector } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import { Spin } from 'antd'
-import { useHistory } from 'react-router-dom'
 
-import { selectArticleById } from '../../redux/slices/articlesSlice'
+import getResource from '../../api/api'
 import ArticlesItem from '../articlesItem'
 
 import styles from './articleDetails.module.scss'
 
 function ArticleDetails({ match }) {
-  const history = useHistory()
   const { slug } = match.params
-  const item = useSelector((state) => selectArticleById(state, slug))
-  const [currentArticle, setCurrentArtticle] = useState(item)
-  const { status } = useSelector((state) => state.articles)
-  useEffect(() => {
-    setCurrentArtticle(item)
-  }, [status])
 
-  if (!currentArticle) {
-    history.push('/')
+  const [currentArticle, setCurrentArtticle] = useState(null)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  async function getCurrentArticle() {
+    try {
+      setLoading(true)
+      const response = await getResource(slug)
+      setCurrentArtticle(response)
+    } catch (e) {
+      setError(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getCurrentArticle()
+  }, [])
+
+  if (loading) {
     return <Spin size="large" className={styles.spinner} />
+  }
+
+  if (error || !currentArticle) {
+    console.log(error)
+    return <div>{error.message}</div>
   }
 
   return (
     <div className={styles.articleDetails}>
       <ArticlesItem article={currentArticle} />
       <div className={styles['articleDetails-body']}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.body}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentArticle.body}</ReactMarkdown>
       </div>
     </div>
   )
