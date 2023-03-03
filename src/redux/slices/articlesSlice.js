@@ -34,17 +34,63 @@ export const fetchArticle = createAsyncThunk('articles/fetchArticle', async (val
   return data
 })
 
+export const updateArticle = createAsyncThunk('articles/updateArticle', async (values, { getState }) => {
+  const token = getState().auth.userToken
+
+  const { title, description, body, tagList, slug } = values
+  const response = await fetch(`${baseUrl}/api/articles/${slug}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      article: {
+        title,
+        description,
+        body,
+        tagList,
+      },
+    }),
+  })
+  const data = await response.json()
+  console.log(data)
+
+  return data
+})
+
+export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (slug, { getState }) => {
+  const token = getState().auth.userToken
+  console.log(slug)
+  const response = await fetch(`${baseUrl}/api/articles/${slug}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  const data = await response.json()
+  console.log(data)
+
+  return data
+})
+
 const articlesSlice = createSlice({
   name: 'articles',
   initialState,
-  reducers: {},
+  reducers: {
+    clearArticlesState(state) {
+      state.error = null
+      state.status = 'idle'
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchArticles.pending, (state) => {
         state.status = 'loading'
       })
       .addCase(fetchArticles.fulfilled, (state, action) => {
-        state.status = 'succeeded'
+        state.status = 'idle'
         state.articles = action.payload.articles
         state.totalPages = action.payload.articlesCount
       })
@@ -56,9 +102,19 @@ const articlesSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(fetchArticle.fulfilled, (state) => {
-        state.status = 'idle'
+        state.status = 'succeeded'
       })
       .addCase(fetchArticle.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(deleteArticle.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(deleteArticle.fulfilled, (state) => {
+        state.status = 'succeeded'
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
@@ -66,6 +122,8 @@ const articlesSlice = createSlice({
 })
 
 export default articlesSlice.reducer
+
+export const { clearArticlesState } = articlesSlice.actions
 
 export const selectAllArticles = (state) => state.articles.articles
 

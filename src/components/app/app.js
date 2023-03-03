@@ -23,6 +23,11 @@ function App() {
       dispath(getCurrentUserBytoken())
     }
   }, [])
+  useEffect(() => {
+    if (userToken) {
+      dispath(getCurrentUserBytoken())
+    }
+  }, [userToken])
 
   return (
     <Router>

@@ -1,4 +1,4 @@
-.articleDetails {
+.articleDetails,  .articleDetails-hidden{
   width: 80%;
   margin: 0 auto;
   margin-top: 1.5em;
@@ -40,4 +40,10 @@
 .spinner {
   width: 100%;
   margin-top: 5em;
+}
+
+.articleDetails-hidden {
+	& > div:first-child > div:last-child > div > div {
+		display: none;
+	 }
 }

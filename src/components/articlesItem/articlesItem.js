@@ -1,7 +1,9 @@
 import React from 'react'
 import { Card, Avatar, Tag, Space, Button } from 'antd'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
+import { deleteArticle } from '../../redux/slices/articlesSlice'
 import convertTime from '../../utils/formatDate'
 import RateItem from '../rateItem'
 
@@ -33,6 +35,8 @@ export const acountDescription = ({ author, updatedAt }) => (
 )
 
 function ArticlesItem({ article }) {
+  const dispatch = useDispatch()
+
   return (
     <Card
       bordered={false}
@@ -53,7 +57,7 @@ function ArticlesItem({ article }) {
       <div className={styles['articles-item-container']}>
         <p className={styles['articles-item__content']}>{article.description}</p>
         <Space className={styles.buttons}>
-          <Button>Delete</Button>
+          <Button onClick={() => dispatch(deleteArticle(article.slug))}>Delete</Button>
 
           <Link to={`/articles/${article.slug}/edit`}>
             <Button>Edit</Button>

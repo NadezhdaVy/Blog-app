@@ -4,7 +4,7 @@ import { Input, Form, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
-import { selectArticleById, fetchArticle } from '../../redux/slices/articlesSlice'
+import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice'
 
 import styles from './newArticle.module.scss'
 
@@ -20,11 +20,17 @@ function NewArticle({ formName }) {
     if (formName === 'Create new article') {
       dispatch(fetchArticle(values))
     }
+    if (formName === 'Edit article') {
+      const valuesWithSlug = { ...values, slug }
+      console.log('update')
+      dispatch(updateArticle(valuesWithSlug))
+    }
     form.resetFields()
   }
   const { status } = useSelector((state) => state.articles)
   useEffect(() => {
-    if (formName === 'Edit article' && !item) {
+    if ((formName === 'Edit article' && !item) || status === 'succeeded') {
+      dispatch(clearArticlesState())
       history.push('/')
     }
   }, [status, formName])
