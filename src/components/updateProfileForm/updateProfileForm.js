@@ -84,11 +84,8 @@ function UpdateProfileForm() {
             label="Avatar image(url)"
             rules={[
               {
-                required: true,
-              },
-              {
                 type: 'url',
-                warningOnly: true,
+                // warningOnly: true,
               },
               {
                 type: 'string',

@@ -1,5 +1,5 @@
 const createUrl = (url, params) => {
-  const baseUrl = 'https://blog.kata.academy/api/'
+  const baseUrl = 'https://blog.kata.academy'
   const newUrl = new URL(url, baseUrl)
 
   if (params) {

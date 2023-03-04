@@ -17,6 +17,10 @@ function registerForm() {
   const [form] = Form.useForm()
 
   useEffect(() => {
+    dispatch(clearState())
+  }, [])
+
+  useEffect(() => {
     if (status === 'succeeded') {
       dispatch(clearState())
       history.replace(from)

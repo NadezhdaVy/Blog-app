@@ -13,20 +13,25 @@ const loginForm = () => {
 
   const { from } = location.state || { from: { pathname: '/' } }
 
-  const dispath = useDispatch()
+  const dispatch = useDispatch()
   const history = useHistory()
   const { status } = useSelector((state) => state.auth)
   const { error } = useSelector((state) => state.auth)
+
+  useEffect(() => {
+    dispatch(clearState())
+  }, [])
+
   useEffect(() => {
     if (status === 'succeeded') {
-      dispath(clearState)
+      dispatch(clearState)
       history.replace(from)
     }
   }, [status])
 
   const onFinish = (values) => {
-    dispath(loginUser(values))
-    console.log('Received values of form: ', values)
+    dispatch(loginUser(values))
+    // console.log('Received values of form: ', values)
   }
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
 

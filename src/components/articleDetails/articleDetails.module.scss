@@ -1,4 +1,5 @@
-.articleDetails,  .articleDetails-hidden{
+.articleDetails,
+.articleDetails-hidden {
   width: 80%;
   margin: 0 auto;
   margin-top: 1.5em;
@@ -43,7 +44,7 @@
 }
 
 .articleDetails-hidden {
-	& > div:first-child > div:last-child > div > div {
-		display: none;
-	 }
+  & > div:first-child > div:last-child > div > div {
+    display: none;
+  }
 }

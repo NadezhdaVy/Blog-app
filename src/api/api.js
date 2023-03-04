@@ -1,7 +1,7 @@
 import createUrl from './createUrl'
 
 const getResource = async (slug) => {
-  const resourceUrl = createUrl(`articles/${slug}`)
+  const resourceUrl = createUrl(`/api/articles/${slug}`)
   const res = await fetch(resourceUrl)
 
   if (!res.ok) {

@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+import authHeaders from '../../api/authHeaders'
+import createMethod from '../../api/createMethod'
+import createUrl from '../../api/createUrl'
+
 const initialState = {
   status: 'idle',
   userInfo: {},
@@ -7,33 +11,28 @@ const initialState = {
   error: null,
 }
 
-const baseUrl = 'https://blog.kata.academy'
-
 export const registerUser = createAsyncThunk(
   'auth/register',
   async ({ username, email, password }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${baseUrl}/api/users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const url = createUrl('/api/users')
+      const fetchMethod = createMethod('post', {
+        user: {
+          username,
+          email,
+          password,
         },
-        body: JSON.stringify({
-          user: {
-            username,
-            email,
-            password,
-          },
-        }),
       })
+      const response = await fetch(url, fetchMethod)
       const data = await response.json()
-      console.log(data)
+
       if (response.status === 200) {
         localStorage.setItem('token', data.user.token)
 
         return data
       }
-      return rejectWithValue(data)
+
+      return rejectWithValue(data.errors)
     } catch (e) {
       return rejectWithValue(e.response.data)
     }
@@ -42,18 +41,14 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, password }, { rejectWithValue }) => {
   try {
-    const response = await fetch(`${baseUrl}/api/users/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const url = createUrl('/api/users/login')
+    const fetchMethod = createMethod('post', {
+      user: {
+        email,
+        password,
       },
-      body: JSON.stringify({
-        user: {
-          email,
-          password,
-        },
-      }),
     })
+    const response = await fetch(url, fetchMethod)
     const data = await response.json()
     console.log('data', data.user)
     if (response.status === 200) {
@@ -61,7 +56,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
       return data
     }
 
-    return rejectWithValue(data)
+    return rejectWithValue(data.errors)
   } catch (e) {
     return rejectWithValue(e.response.data)
   }
@@ -72,20 +67,18 @@ export const getCurrentUserBytoken = createAsyncThunk(
   async (arg, { rejectWithValue, getState }) => {
     const token = getState().auth.userToken
     try {
-      const response = await fetch(`${baseUrl}/api/user`, {
+      const url = createUrl('/api/user')
+      const fetchHeaders = authHeaders(token)
+      const response = await fetch(url, {
         method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        headers: fetchHeaders,
       })
       const data = await response.json()
 
       if (response.status === 200) {
         return { ...data }
       }
-      return rejectWithValue(data)
+      return rejectWithValue(data.errors)
     } catch (e) {
       console.log('Error', e.response.data)
       return rejectWithValue(e.response.data)
@@ -96,22 +89,22 @@ export const getCurrentUserBytoken = createAsyncThunk(
 export const updateProfile = createAsyncThunk('auth/updateProfile', async (values, { rejectWithValue, getState }) => {
   const token = getState().auth.userToken
   try {
-    const response = await fetch(`${baseUrl}/api/user`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+    const url = createUrl('/api/user')
+    const fetchMethod = createMethod(
+      'put',
+      {
         user: { ...values },
-      }),
-    })
+      },
+      token
+    )
+    const response = await fetch(url, fetchMethod)
+
     const data = await response.json()
 
     if (response.status === 200) {
       return data
     }
-    return rejectWithValue(data)
+    return rejectWithValue(data.errors)
   } catch (e) {
     return rejectWithValue(e.response.data)
   }
@@ -140,7 +133,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.payload.errors
+        state.error = action.payload
       })
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading'
@@ -152,7 +145,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.payload.errors
+        state.error = action.payload
       })
       .addCase(getCurrentUserBytoken.pending, (state) => {
         state.status = 'loading'
@@ -164,7 +157,7 @@ const authSlice = createSlice({
       })
       .addCase(getCurrentUserBytoken.rejected, (state, action) => {
         state.status = 'failed'
-        state.error = action.payload.errors
+        state.error = action.payload
       })
       .addCase(updateProfile.pending, (state) => {
         state.status = 'loading'
@@ -176,7 +169,7 @@ const authSlice = createSlice({
       .addCase(updateProfile.rejected, (state, action) => {
         state.status = 'failed'
 
-        state.error = action.payload.errors
+        state.error = action.payload
       })
   },
 })

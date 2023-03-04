@@ -53,14 +53,18 @@ function NewArticle({ formName }) {
           initialValues={initialValues}
           requiredMark={false}
         >
-          <Form.Item name="title" label="Title" rules={[{ min: 3, max: 60, required: true, whitespace: true }]}>
+          <Form.Item name="title" label="Title" rules={[{ min: 3, max: 40, required: true, whitespace: true }]}>
             <Input className={styles.newArticle__input} />
           </Form.Item>
-          <Form.Item name="description" label="Short description">
+          <Form.Item
+            name="description"
+            label="Short description"
+            rules={[{ min: 3, max: 400, required: true, whitespace: true }]}
+          >
             <Input className={styles.newArticle__input} />
           </Form.Item>
 
-          <Form.Item name="body" label="Text">
+          <Form.Item name="body" label="Text" rules={[{ min: 3, required: true, whitespace: true }]}>
             <Input.TextArea className={styles.newArticle__input} />
           </Form.Item>
 

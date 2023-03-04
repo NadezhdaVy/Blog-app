@@ -7,7 +7,7 @@ import styles from './rateItem.module.scss'
 function RateItem({ stars }) {
   return (
     <Space className={styles['rate-container']}>
-      <Rate className={styles.rate} count={1} character={<HeartOutlined />} />
+      <Rate className={styles.rate} count={1} character={<HeartOutlined className={styles.rate__icon} />} />
       <span>{stars}</span>
     </Space>
   )
