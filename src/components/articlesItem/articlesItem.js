@@ -2,10 +2,8 @@
 import React from 'react'
 import { Card, Avatar, Tag, Space, Button } from 'antd'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import Popconfirm from '../popconfirm'
-import { deleteArticle } from '../../redux/slices/articlesSlice'
 import convertTime from '../../utils/formatDate'
 import RateItem from '../rateItem'
 
@@ -37,8 +35,6 @@ export const acountDescription = ({ author, updatedAt }) => (
 )
 
 function ArticlesItem({ article }) {
-  const dispatch = useDispatch()
-
   return (
     <Card
       bordered={false}
@@ -50,7 +46,7 @@ function ArticlesItem({ article }) {
             <Link className={styles['articles-item__title']} to={`/articles/${article.slug}`}>
               {article.title}
             </Link>
-            <RateItem stars={article.favoritesCount} />
+            <RateItem stars={article.favoritesCount} slug={article.slug} favorited={article.favorited} />
           </Space>
           {renderTags(article)}
         </Space>
@@ -60,11 +56,7 @@ function ArticlesItem({ article }) {
         <p className={styles['articles-item__content']}>{article.description}</p>
         <Space className={styles.buttons}>
           <Popconfirm slug={article.slug}>
-            <Button
-            // onClick={() => dispatch(deleteArticle(article.slug))}
-            >
-              Delete
-            </Button>
+            <Button>Delete</Button>
           </Popconfirm>
 
           <Link to={`/articles/${article.slug}/edit`}>

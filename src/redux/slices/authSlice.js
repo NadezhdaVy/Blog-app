@@ -151,7 +151,7 @@ const authSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(getCurrentUserBytoken.fulfilled, (state, action) => {
-        state.status = 'succeeded'
+        state.status = 'idle'
         state.userInfo.user = action.payload.user
         state.userToken = action.payload.user.token
       })

@@ -1,26 +1,35 @@
+/* eslint-disable no-unused-vars */
 import { Button, Form, Input } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { updateProfile } from '../../redux/slices/authSlice'
+import ErrorIndicator from '../errorIndicator'
+import { clearState, updateProfile } from '../../redux/slices/authSlice'
 
 import styles from './updateProfileForm.module.scss'
 
 function UpdateProfileForm() {
   const dispatch = useDispatch()
-
-  const user = useSelector((state) => state.auth.userInfo)
+  const history = useHistory()
+  const { userInfo: user, status, error } = useSelector((state) => state.auth)
   const { username, email } = user.user
 
   const [form] = Form.useForm()
 
   const onFinish = (values) => {
+    dispatch(clearState())
     dispatch(updateProfile(values))
-    console.log('Received values of form: ', values)
   }
-
+  useEffect(() => {
+    if (status === 'succeeded') {
+      history.push('/')
+    }
+  }, [status, error])
+  const errorMessage = error ? <ErrorIndicator error={error} /> : null
   return (
     <div className={styles['updateProfileForm-container']}>
+      {errorMessage}
       <div className={styles['updateProfileForm-main']}>
         Edit Profile
         <Form
@@ -37,11 +46,15 @@ function UpdateProfileForm() {
             label="Username"
             rules={[
               {
-                required: false,
+                type: 'string',
                 message: 'Username is incorrect',
                 whitespace: true,
                 max: 20,
-                min: 6,
+                min: 4,
+              },
+              {
+                required: true,
+                message: 'Please input your Username',
               },
             ]}
           >
@@ -57,7 +70,7 @@ function UpdateProfileForm() {
                 message: 'The input is not valid E-mail!',
               },
               {
-                required: false,
+                required: true,
                 message: 'Please input your E-mail!',
               },
             ]}
@@ -85,7 +98,6 @@ function UpdateProfileForm() {
             rules={[
               {
                 type: 'url',
-                // warningOnly: true,
               },
               {
                 type: 'string',

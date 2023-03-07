@@ -1,9 +1,10 @@
 .updateProfileForm-container {
   justify-content: center;
   display: flex;
+  flex-direction: column;
   padding-top: 1em;
   padding-bottom: 1em;
-
+align-items: center;
   .updateProfileForm-main {
     background-color: white;
     padding: 1.5em;
@@ -16,7 +17,7 @@
     font-family: 'Roboto';
     font-weight: 500;
     font-size: 20px;
-
+max-width: 400px;
     .updateProfileForm {
       padding-top: 1em;
 

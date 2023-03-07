@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import { clearArticlesState } from '../../redux/slices/articlesSlice'
-import getResource from '../../api/api'
+import { getResource } from '../../api/api'
 import ArticlesItem from '../articlesItem'
 
 import styles from './articleDetails.module.scss'
@@ -20,12 +20,12 @@ function ArticleDetails({ match }) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
   const { status } = useSelector((state) => state.articles)
-  const { userInfo } = useSelector((state) => state.auth)
-  console.log(status)
+  const { userInfo, userToken } = useSelector((state) => state.auth)
+
   async function getCurrentArticle() {
     try {
       setLoading(true)
-      const response = await getResource(slug)
+      const response = await getResource(slug, userToken)
       setCurrentArtticle(response)
     } catch (e) {
       setError(e)

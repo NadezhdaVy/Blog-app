@@ -11,10 +11,16 @@ const initialState = {
   totalPages: 0,
 }
 
-export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset = 1) => {
+export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset, { getState }) => {
   const url = createUrl('/api/articles', [{ limit: 10 }, { offset }])
-  const response = await fetch(url)
+  const token = getState().auth.userToken
+  const fetchHeaders = authHeaders(token)
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: fetchHeaders,
+  })
   const body = await response.json()
+
   return body
 })
 

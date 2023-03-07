@@ -7,7 +7,7 @@ import registerForm from '../registerForm'
 import Navbar from '../navbar'
 import ArticleDetails from '../articleDetails'
 import ArticlesList from '../articlesList'
-import loginForm from '../loginForm'
+import LoginForm from '../loginForm'
 import UpdateProfileForm from '../updateProfileForm'
 import PrivateRoute from '../privateRoute'
 import NewArticle from '../newArticle'
@@ -35,9 +35,10 @@ function App() {
       <div className={styles.app}>
         <Switch>
           <Route exact path="/" render={() => <ArticlesList />} />
+          <Route exact path="/articles" render={() => <ArticlesList />} />
           <Route exact path="/articles/:slug" component={ArticleDetails} />
           <Route exact path="/sign-up" component={registerForm} />
-          <Route exact path="/log-in" component={loginForm} />
+          <Route exact path="/log-in" component={LoginForm} />
           <PrivateRoute path="/profile">
             <UpdateProfileForm />
           </PrivateRoute>

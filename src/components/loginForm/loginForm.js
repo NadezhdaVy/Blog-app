@@ -8,10 +8,10 @@ import { loginUser, clearState } from '../../redux/slices/authSlice'
 
 import styles from './loginForm.module.scss'
 
-const loginForm = () => {
+function LoginForm() {
   const location = useLocation()
 
-  const { from } = location.state || { from: { pathname: '/' } }
+  const { from } = location.state || { from: { pathname: '/articles' } }
 
   const dispatch = useDispatch()
   const history = useHistory()
@@ -93,4 +93,4 @@ const loginForm = () => {
     </>
   )
 }
-export default loginForm
+export default LoginForm
