@@ -1,7 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import ErrorIndicator from '../errorIndicator'
 import { clearState, updateProfile } from '../../redux/slices/authSlice'
@@ -10,7 +10,7 @@ import styles from './updateProfileForm.module.scss'
 
 function UpdateProfileForm() {
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { userInfo: user, status, error } = useSelector((state) => state.auth)
   const { username, email } = user
 
@@ -19,7 +19,7 @@ function UpdateProfileForm() {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(clearState())
-      history.push('/')
+      navigate('/')
     }
   }, [status])
 

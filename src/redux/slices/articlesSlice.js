@@ -81,7 +81,6 @@ export const updateArticle = createAsyncThunk('articles/updateArticle', async (v
 
 export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (slug, { getState, rejectWithValue }) => {
   const token = getState().auth.userToken
-  console.log(slug)
   try {
     const url = createUrl(`/api/articles/${slug}`)
     const fetchHeaders = authHeaders(token)

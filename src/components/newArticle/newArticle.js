@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Input, Form, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import ErrorIndicator from '../errorIndicator/errorIndicator'
 import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice'
@@ -11,7 +11,7 @@ import styles from './newArticle.module.scss'
 function NewArticle({ formName }) {
   const { slug } = useParams()
   const item = useSelector((state) => selectArticleById(state, slug))
-  const history = useHistory()
+  const navigate = useNavigate()
   const { error } = useSelector((state) => state.articles)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -33,7 +33,7 @@ function NewArticle({ formName }) {
   useEffect(() => {
     if ((formName === 'Edit article' && !item) || status === 'succeeded') {
       dispatch(clearArticlesState())
-      history.push('/')
+      navigate('/')
     }
   }, [status, formName])
 

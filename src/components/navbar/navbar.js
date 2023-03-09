@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Avatar } from 'antd'
 
@@ -10,12 +10,12 @@ import styles from './navbar.module.scss'
 function Navbar() {
   const { userInfo: user, userToken } = useSelector((state) => state.auth)
 
-  const history = useHistory()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const onLogOut = () => {
     localStorage.removeItem('token')
     dispatch(logOut())
-    history.push('/log-in')
+    navigate('/log-in')
   }
 
   let content
@@ -24,7 +24,7 @@ function Navbar() {
     content = (
       <>
         <Link to="/log-in">Log in</Link>
-        <Link className={styles['sign-up']} to="/sign-up">
+        <Link className={styles['sign-up']} to="sign-up">
           Sign Up
         </Link>
       </>
@@ -32,7 +32,7 @@ function Navbar() {
   } else {
     content = (
       <>
-        <Link className={styles['create-article']} to="/new-article">
+        <Link className={styles['create-article']} to="new-article">
           Create article
         </Link>
         <Link to="/profile">

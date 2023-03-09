@@ -1,17 +1,16 @@
 import { Button, Form, Input, Checkbox } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import ErrorIndicator from '../errorIndicator'
 import { registerUser, clearState } from '../../redux/slices/authSlice'
 
 import styles from './registerForm.module.scss'
 
-function registerForm() {
-  const location = useLocation()
-  const history = useHistory()
-  const { from } = location.state || { from: { pathname: '/' } }
+function RegisterForm() {
+  const navigate = useNavigate()
+
   const { status } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const [form] = Form.useForm()
@@ -23,7 +22,7 @@ function registerForm() {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(clearState())
-      history.replace(from)
+      navigate('/')
     }
   }, [status])
 
@@ -149,4 +148,4 @@ function registerForm() {
     </>
   )
 }
-export default registerForm
+export default RegisterForm

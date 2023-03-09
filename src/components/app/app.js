@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
 
 import { clearState, getCurrentUserBytoken } from '../../redux/slices/authSlice'
-import registerForm from '../registerForm'
+import RegisterForm from '../registerForm'
 import Navbar from '../navbar'
 import ArticleDetails from '../articleDetails'
 import ArticlesList from '../articlesList'
@@ -31,29 +31,44 @@ function App() {
   }, [status])
 
   return (
-    <Router>
+    <BrowserRouter>
       <Navbar />
       <div className={styles.app}>
-        <Switch>
-          <Route exact path="/" render={() => <ArticlesList />} />
-          <Route exact path="/articles" render={() => <ArticlesList />} />
-          <Route exact path="/articles/:slug" component={ArticleDetails} />
-          <Route exact path="/sign-up" component={registerForm} />
-          <Route exact path="/log-in" component={LoginForm} />
-          <PrivateRoute path="/profile">
-            <UpdateProfileForm />
-          </PrivateRoute>
-          <PrivateRoute path="/new-article">
-            <NewArticle formName="Create new article" />
-          </PrivateRoute>
-          <PrivateRoute exact path="/articles/:slug/edit">
-            <NewArticle formName="Edit article" />
-          </PrivateRoute>
+        <Routes>
+          <Route exact path="/" element={<ArticlesList />} />
+          <Route exact path="/articles/:slug" element={<ArticleDetails />} />
+          <Route exact path="/sign-up" element={<RegisterForm />} />
+          <Route exact path="/log-in" element={<LoginForm />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <UpdateProfileForm />
+              </PrivateRoute>
+            }
+          />
 
-          <Redirect to="/" />
-        </Switch>
+          <Route
+            path="/new-article"
+            element={
+              <PrivateRoute>
+                <NewArticle formName="Create new article" />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/articles/:slug/edit"
+            element={
+              <PrivateRoute path="/new-article">
+                <NewArticle formName="Edit article" />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   )
 }
 

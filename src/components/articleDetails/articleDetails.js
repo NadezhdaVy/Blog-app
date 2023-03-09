@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import ErrorIndicator from '../errorIndicator'
 import { clearArticlesState } from '../../redux/slices/articlesSlice'
@@ -12,11 +12,12 @@ import ArticlesItem from '../articlesItem'
 
 import styles from './articleDetails.module.scss'
 
-function ArticleDetails({ match }) {
-  const { slug } = match.params
+function ArticleDetails() {
+  const params = useParams()
+  const { slug } = params
 
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [currentArticle, setCurrentArtticle] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -42,7 +43,7 @@ function ArticleDetails({ match }) {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(clearArticlesState())
-      history.push('/')
+      navigate('/')
     }
   }, [status])
 
@@ -51,7 +52,7 @@ function ArticleDetails({ match }) {
   }
 
   const err = () => {
-    setTimeout(() => history.push('/'), 1000)
+    setTimeout(() => navigate('/'), 1000)
   }
 
   if (error || !currentArticle) {

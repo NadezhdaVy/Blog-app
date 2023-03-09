@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, Form, Input } from 'antd'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ErrorIndicator from '../errorIndicator'
@@ -9,12 +9,8 @@ import { loginUser, clearState } from '../../redux/slices/authSlice'
 import styles from './loginForm.module.scss'
 
 function LoginForm() {
-  const location = useLocation()
-
-  const { from } = location.state || { from: { pathname: '/articles' } }
-
   const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
   const { status } = useSelector((state) => state.auth)
   const { error } = useSelector((state) => state.auth)
 
@@ -25,7 +21,7 @@ function LoginForm() {
   useEffect(() => {
     if (status === 'succeeded') {
       dispatch(clearState)
-      history.replace(from)
+      navigate('/')
     }
   }, [status])
 
