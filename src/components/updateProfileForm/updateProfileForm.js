@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Button, Form, Input } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,19 +12,21 @@ function UpdateProfileForm() {
   const dispatch = useDispatch()
   const history = useHistory()
   const { userInfo: user, status, error } = useSelector((state) => state.auth)
-  const { username, email } = user.user
+  const { username, email } = user
 
   const [form] = Form.useForm()
 
-  const onFinish = (values) => {
-    dispatch(clearState())
-    dispatch(updateProfile(values))
-  }
   useEffect(() => {
     if (status === 'succeeded') {
+      dispatch(clearState())
       history.push('/')
     }
-  }, [status, error])
+  }, [status])
+
+  const onFinish = (values) => {
+    dispatch(updateProfile(values))
+  }
+
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
   return (
     <div className={styles['updateProfileForm-container']}>

@@ -1,20 +1,20 @@
+@use '../../styles/shadow.scss';
 .articles-item {
   padding: 1em 1.2em;
   margin-top: 0.5em;
   background-color: rgba(255, 255, 255);
-  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: shadow.$box-shadows;
 
-&> div:first-child > div:first-child {
 
-	align-items: flex-start;
-}
+  & > div:first-child > div:first-child {
+    align-items: flex-start;
+  }
 
   .articles-item-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-height: 70px;
-	
   }
 
   .buttons {
@@ -68,11 +68,9 @@
   .person-info {
     display: flex;
     align-items: center;
-	
 
     &__description {
       margin-right: 9px;
-	
 
       & > div:first-child {
         font-size: 18px;

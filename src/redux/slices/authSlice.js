@@ -50,7 +50,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
     })
     const response = await fetch(url, fetchMethod)
     const data = await response.json()
-    console.log('data', data.user)
+    // console.log('data', data.user)
     if (response.status === 200) {
       localStorage.setItem('token', data.user.token)
       return data
@@ -80,7 +80,7 @@ export const getCurrentUserBytoken = createAsyncThunk(
       }
       return rejectWithValue(data.errors)
     } catch (e) {
-      console.log('Error', e.response.data)
+      // console.log('Error', e.response.data)
       return rejectWithValue(e.response.data)
     }
   }
@@ -116,6 +116,10 @@ const authSlice = createSlice({
   reducers: {
     clearState(state) {
       state.status = 'idle'
+      state.error = null
+    },
+    logOut(state) {
+      state.status = 'idle'
       state.userInfo = {}
       state.error = null
       state.userToken = localStorage.getItem('token')
@@ -128,7 +132,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.userInfo.user = action.payload.user
+        state.userInfo = action.payload.user
         state.userToken = action.payload.user.token
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -140,7 +144,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.userInfo.user = action.payload.user
+        state.userInfo = action.payload.user
         state.userToken = action.payload.user.token
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -151,8 +155,8 @@ const authSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(getCurrentUserBytoken.fulfilled, (state, action) => {
-        state.status = 'idle'
-        state.userInfo.user = action.payload.user
+        state.status = 'succeeded'
+        state.userInfo = action.payload.user
         state.userToken = action.payload.user.token
       })
       .addCase(getCurrentUserBytoken.rejected, (state, action) => {
@@ -164,7 +168,7 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.userInfo.user = action.payload.user
+        state.userInfo = action.payload.user
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.status = 'failed'
@@ -174,6 +178,6 @@ const authSlice = createSlice({
   },
 })
 
-export const { clearState } = authSlice.actions
+export const { clearState, logOut } = authSlice.actions
 
 export default authSlice.reducer

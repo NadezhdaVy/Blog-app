@@ -31,7 +31,6 @@ function LoginForm() {
 
   const onFinish = (values) => {
     dispatch(loginUser(values))
-    // console.log('Received values of form: ', values)
   }
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
 

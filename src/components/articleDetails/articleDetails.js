@@ -5,6 +5,7 @@ import { Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
+import ErrorIndicator from '../errorIndicator'
 import { clearArticlesState } from '../../redux/slices/articlesSlice'
 import { getResource } from '../../api/api'
 import ArticlesItem from '../articlesItem'
@@ -49,21 +50,19 @@ function ArticleDetails({ match }) {
     return <Spin size="large" className={styles.spinner} />
   }
 
-  if (error || !currentArticle) {
-    console.log(status)
-    return <div>{error.message}</div>
+  const err = () => {
+    setTimeout(() => history.push('/'), 1000)
   }
 
-  if (status === 'failed') {
-    console.log('failed oooops')
+  if (error || !currentArticle) {
+    err()
+    return <ErrorIndicator error="The Article was not found" />
   }
 
   return (
     <div
       className={
-        userInfo.user && userInfo.user.username === currentArticle.author.username
-          ? styles.articleDetails
-          : styles['articleDetails-hidden']
+        userInfo.username === currentArticle.author.username ? styles.articleDetails : styles['articleDetails-hidden']
       }
     >
       <ArticlesItem article={currentArticle} />

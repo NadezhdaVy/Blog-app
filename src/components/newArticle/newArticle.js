@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react'
 import { Input, Form, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 
+import ErrorIndicator from '../errorIndicator/errorIndicator'
 import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice'
 
 import styles from './newArticle.module.scss'
@@ -12,22 +12,24 @@ function NewArticle({ formName }) {
   const { slug } = useParams()
   const item = useSelector((state) => selectArticleById(state, slug))
   const history = useHistory()
-
+  const { error } = useSelector((state) => state.articles)
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const onFinish = (values) => {
-    console.log(values)
     if (formName === 'Create new article') {
       dispatch(fetchArticle(values))
     }
     if (formName === 'Edit article') {
       const valuesWithSlug = { ...values, slug }
-      console.log('update')
       dispatch(updateArticle(valuesWithSlug))
     }
     form.resetFields()
   }
   const { status } = useSelector((state) => state.articles)
+  useEffect(() => {
+    dispatch(clearArticlesState())
+  }, [])
+
   useEffect(() => {
     if ((formName === 'Edit article' && !item) || status === 'succeeded') {
       dispatch(clearArticlesState())
@@ -39,8 +41,11 @@ function NewArticle({ formName }) {
     ? { title: item.title, tagList: item.tagList, description: item.description, body: item.body }
     : { tagList: ['programming'] }
 
+  const errorMesage = error ? <ErrorIndicator error="something went wrong" /> : null
+
   return (
     <div className={styles['newArticle-container']}>
+      {errorMesage}
       <div className={styles['newArticle-main']}>
         <h1 className={styles.newArticle__title}>{formName}</h1>
         <Form

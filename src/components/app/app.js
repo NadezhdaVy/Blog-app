@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getCurrentUserBytoken } from '../../redux/slices/authSlice'
+import { clearState, getCurrentUserBytoken } from '../../redux/slices/authSlice'
 import registerForm from '../registerForm'
 import Navbar from '../navbar'
 import ArticleDetails from '../articleDetails'
@@ -15,19 +15,20 @@ import NewArticle from '../newArticle'
 import styles from './app.module.scss'
 
 function App() {
-  const dispath = useDispatch()
-  const { userToken } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const { userToken, userInfo, status } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if (userToken) {
-      dispath(getCurrentUserBytoken())
+    if (userToken && !userInfo.user) {
+      dispatch(getCurrentUserBytoken())
     }
   }, [])
+
   useEffect(() => {
-    if (userToken) {
-      dispath(getCurrentUserBytoken())
+    if (status === 'succeeded') {
+      dispatch(clearState())
     }
-  }, [userToken])
+  }, [status])
 
   return (
     <Router>

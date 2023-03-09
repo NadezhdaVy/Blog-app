@@ -11,20 +11,32 @@ const initialState = {
   totalPages: 0,
 }
 
-export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset, { getState }) => {
-  const url = createUrl('/api/articles', [{ limit: 10 }, { offset }])
-  const token = getState().auth.userToken
-  const fetchHeaders = authHeaders(token)
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: fetchHeaders,
-  })
-  const body = await response.json()
+export const fetchArticles = createAsyncThunk(
+  'articles/fetchArticles',
+  async (offset, { getState, rejectWithValue }) => {
+    const url = createUrl('/api/articles', [{ limit: 10 }, { offset }])
+    const token = getState().auth.userToken
 
-  return body
-})
+    const fetchHeaders = authHeaders(token)
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: fetchHeaders,
+      })
+      if (response.ok) {
+        const body = await response.json()
 
-export const fetchArticle = createAsyncThunk('articles/fetchArticle', async (values, { getState }) => {
+        return body
+      }
+
+      return rejectWithValue('something went wrong')
+    } catch (e) {
+      return rejectWithValue(e)
+    }
+  }
+)
+
+export const fetchArticle = createAsyncThunk('articles/fetchArticle', async (values, { getState, rejectWithValue }) => {
   const token = getState().auth.userToken
   const url = createUrl('/api/articles')
   const fetchMethod = createMethod(
@@ -36,11 +48,16 @@ export const fetchArticle = createAsyncThunk('articles/fetchArticle', async (val
     },
     token
   )
-  const response = await fetch(url, fetchMethod)
-  const data = await response.json()
-  console.log(data)
-
-  return data
+  try {
+    const response = await fetch(url, fetchMethod)
+    const data = await response.json()
+    if (data.ok) {
+      return data
+    }
+    return rejectWithValue(data.errors.message)
+  } catch (e) {
+    return rejectWithValue(e)
+  }
 })
 
 export const updateArticle = createAsyncThunk('articles/updateArticle', async (values, { getState }) => {

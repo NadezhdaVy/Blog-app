@@ -1,0 +1,21 @@
+@use './shadow';
+
+.form-container { 
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  align-items: center;
+}
+
+.form-main {
+	background-color: white;
+	padding: 1.5em;
+	//text-align: center;
+	box-shadow: shadow.$box-shadows;
+	font-family: 'Roboto';
+	font-weight: 500;
+	font-size: 20px;
+	max-width: 400px;
+}

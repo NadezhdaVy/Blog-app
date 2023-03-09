@@ -1,10 +1,12 @@
+@use '../../styles/shadow.scss';
+
 .articleDetails,
 .articleDetails-hidden {
   width: 80%;
   margin: 0 auto;
   margin-top: 1.5em;
   padding: 1.5em;
-  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: shadow.$box-shadows;
   box-sizing: border-box;
   position: relative;
   [class~='ant-card'] {

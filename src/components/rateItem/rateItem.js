@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { HeartOutlined } from '@ant-design/icons'
 import { Rate, Space } from 'antd'
@@ -23,6 +22,9 @@ function RateItem({ stars, slug, favorited }) {
       setError(e)
     }
   }
+  if (error) {
+    console.log(error)
+  }
 
   return (
     <Space className={styles['rate-container']}>
@@ -31,9 +33,7 @@ function RateItem({ stars, slug, favorited }) {
         onChange={() => rateItem(slug, userToken, like)}
         className={styles.rate}
         count={1}
-        character={
-          <HeartOutlined style={{ color: like && userToken ? 'red' : 'black' }} className={styles.rate__icon} />
-        }
+        character={<HeartOutlined style={{ color: like ? 'red' : 'black' }} className={styles.rate__icon} />}
       />
       <span>{rating}</span>
     </Space>

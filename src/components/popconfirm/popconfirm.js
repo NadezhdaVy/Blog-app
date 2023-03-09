@@ -4,11 +4,10 @@ import { useDispatch } from 'react-redux'
 
 import { deleteArticle } from '../../redux/slices/articlesSlice'
 
-const cancel = () => {
-  message.error('Click on No')
-}
-
 function Popconfirm({ children, slug }) {
+  const cancel = () => {
+    message.error('Click on No')
+  }
   const dispatch = useDispatch()
   return (
     <Confirm

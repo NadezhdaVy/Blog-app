@@ -1,7 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
-import { Card, Avatar, Tag, Space, Button } from 'antd'
+import { Card, Avatar, Tag, Space, Button, Skeleton } from 'antd'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Popconfirm from '../popconfirm'
 import convertTime from '../../utils/formatDate'
@@ -9,32 +9,50 @@ import RateItem from '../rateItem'
 
 import styles from './articlesItem.module.scss'
 
-export const renderTags = ({ tagList }) => {
-  let id = 1
-  const renderedTags = tagList.map((tag) => (
-    <Tag key={id++} className={styles.tag}>
-      <a href="#top">{tag}</a>
-    </Tag>
-  ))
-
-  return (
-    <Space size={1} className={styles['articles-item__tags']}>
-      {renderedTags}
-    </Space>
-  )
-}
-
-export const acountDescription = ({ author, updatedAt }) => (
-  <div className={styles['person-info']}>
-    <div className={styles['person-info__description']}>
-      <div>{author.username}</div>
-      <div>{convertTime(updatedAt)}</div>
-    </div>
-    <Avatar className={styles['person-info__avatar']} src={author.image} size={42} />
-  </div>
-)
-
 function ArticlesItem({ article }) {
+  const renderTags = ({ tagList }) => {
+    let id = 1
+    const renderedTags = tagList.map((tag) => (
+      <Tag key={id++} className={styles.tag}>
+        <a href="#top">{tag}</a>
+      </Tag>
+    ))
+
+    return (
+      <Space size={1} className={styles['articles-item__tags']}>
+        {renderedTags}
+      </Space>
+    )
+  }
+
+  const acountDescription = ({ author, updatedAt }) => (
+    <div className={styles['person-info']}>
+      <div className={styles['person-info__description']}>
+        <div>{author.username}</div>
+        <div>{convertTime(updatedAt)}</div>
+      </div>
+      <Avatar className={styles['person-info__avatar']} src={author.image} size={42} />
+    </div>
+  )
+
+  const { status } = useSelector((state) => state.articles)
+  if (status === 'loading') {
+    return (
+      <>
+        <Space style={{ position: 'absolute', right: 0, top: 9 }}>
+          <Skeleton.Input style={{ height: 20 }} />
+          <Skeleton.Avatar />
+        </Space>
+        <Skeleton
+          active
+          paragraph={{
+            rows: 3,
+          }}
+        />
+      </>
+    )
+  }
+
   return (
     <Card
       bordered={false}
