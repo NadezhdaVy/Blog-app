@@ -1,25 +1,22 @@
 .loginForm-container {
-	composes: form-container from '../../styles/form.scss';
-
+  composes: form-container from '../../styles/form.scss';
 }
-  .loginForm-inner {
-	composes: form-main from '../../styles/form.scss';
+.loginForm-inner {
+  composes: form-main from '../../styles/form.scss';
 
+  .loginForm {
+    &__input {
+      padding: 0.5em;
+      min-width: 260px;
+    }
 
-    .loginForm {
-      &__input {
-        padding: 0.5em;
-        min-width: 260px;
-      }
-
-      &__button {
-        display: block;
-        width: 100%;
-        margin-bottom: 1em;
-        span {
-          color: white;
-        }
+    &__button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+      span {
+        color: white;
       }
     }
   }
-
+}

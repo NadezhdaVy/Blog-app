@@ -1,29 +1,28 @@
 @use '../../styles/shadow';
 
 .updateProfileForm-container {
-	composes: form-container from '../../styles/form.scss';
+  composes: form-container from '../../styles/form.scss';
 }
-  .updateProfileForm-main {
-	composes: form-main from '../../styles/form.scss';
-	text-align: center;
-    .updateProfileForm {
-      padding-top: 1em;
+.updateProfileForm-main {
+  composes: form-main from '../../styles/form.scss';
+  text-align: center;
+  .updateProfileForm {
+    padding-top: 1em;
 
-      &__button {
-        width: 100%;
-        margin-top: 1em;
-        margin-bottom: 1em;
+    &__button {
+      width: 100%;
+      margin-top: 1em;
+      margin-bottom: 1em;
 
-        span {
-          color: white;
-        }
-      }
-
-      &__input {
-        padding: 0.7em;
-        margin-bottom: 0.5em;
-        min-width: 350px;
+      span {
+        color: white;
       }
     }
-  }
 
+    &__input {
+      padding: 0.7em;
+      margin-bottom: 0.5em;
+      min-width: 350px;
+    }
+  }
+}

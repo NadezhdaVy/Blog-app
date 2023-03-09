@@ -1,59 +1,57 @@
 .newArticle-container {
-	composes: form-container from '../../styles/form.scss';
+  composes: form-container from '../../styles/form.scss';
 }
 
-  .newArticle-main {
-	composes: form-main from '../../styles/form.scss';
-	max-width: fit-content;
+.newArticle-main {
+  composes: form-main from '../../styles/form.scss';
+  max-width: fit-content;
 
+  .deleteButton {
+    position: relative;
+    top: 3px;
+    margin-left: 1em;
 
-    .deleteButton {
-      position: relative;
-      top: 3px;
-      margin-left: 1em;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    border-color: red;
 
-      width: 100px;
-      height: 35px;
-      border-radius: 5px;
-      border-color: red;
-
-      span {
-        color: red;
-      }
-    }
-
-    .buttonAdd {
-      position: absolute;
-      bottom: 52px;
-      left: 27em;
-      width: 100px;
-      height: 35px;
-      border-color: rgba(24, 144, 255, 1);
-      span {
-        color: rgba(24, 144, 255, 1);
-      }
-    }
-
-    .newArticle {
-      &__title {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin: 0;
-        margin-bottom: 1em;
-      }
-
-      &__input {
-        padding: 0.5em;
-        min-width: 600px;
-      }
-
-      &__submit-button {
-        width: 45%;
-        span {
-          color: white;
-        }
-      }
+    span {
+      color: red;
     }
   }
 
+  .buttonAdd {
+    position: absolute;
+    bottom: 52px;
+    left: 27em;
+    width: 100px;
+    height: 35px;
+    border-color: rgba(24, 144, 255, 1);
+    span {
+      color: rgba(24, 144, 255, 1);
+    }
+  }
+
+  .newArticle {
+    &__title {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin: 0;
+      margin-bottom: 1em;
+    }
+
+    &__input {
+      padding: 0.5em;
+      min-width: 600px;
+    }
+
+    &__submit-button {
+      width: 45%;
+      span {
+        color: white;
+      }
+    }
+  }
+}

@@ -30,7 +30,7 @@
     "react/state-in-constructor": 0,
     "class-methods-use-this": 0,
     "no-plusplus": 0,
-	 "react/jsx-props-no-spreading": "off",
+    "react/jsx-props-no-spreading": "off",
     "no-param-reassign": 0,
     "no-console": "off",
     "import/order": [
