@@ -1,2 +1,2 @@
 vercel
- https://blog-app-phi-liart.vercel.app
+https://blog-app-nadezhdavy.vercel.app
