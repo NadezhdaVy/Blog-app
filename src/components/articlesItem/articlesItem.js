@@ -31,7 +31,7 @@ function ArticlesItem({ article }) {
         <div>{author.username}</div>
         <div>{convertTime(updatedAt)}</div>
       </div>
-      <Avatar className={styles['person-info__avatar']} src={author.image} size={42} />
+      <Avatar onError={() => false} className={styles['person-info__avatar']} src={author.image} size={42} />
     </div>
   )
 
@@ -61,7 +61,7 @@ function ArticlesItem({ article }) {
       title={
         <Space size={4} direction="vertical">
           <Space size={10}>
-            <Link className={styles['articles-item__title']} to={`/articles/${article.slug}`}>
+            <Link className={styles['articles-item__title']} to={`articles/${article.slug}`}>
               {article.title}
             </Link>
             <RateItem stars={article.favoritesCount} slug={article.slug} favorited={article.favorited} />

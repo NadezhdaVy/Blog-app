@@ -28,7 +28,7 @@ export const fetchArticles = createAsyncThunk(
 
         return body
       }
-      console.log(response)
+
       return rejectWithValue('something went wrong')
     } catch (e) {
       return rejectWithValue(e)
@@ -38,8 +38,6 @@ export const fetchArticles = createAsyncThunk(
 
 export const fetchArticle = createAsyncThunk('articles/fetchArticle', async (values, { getState, rejectWithValue }) => {
   const token = getState().auth.userToken
-  console.log(token)
-  console.log(values)
   const url = createUrl('/api/articles')
   const fetchHeaders = authHeaders(token)
   try {

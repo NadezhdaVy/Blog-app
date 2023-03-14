@@ -40,7 +40,7 @@ function Navbar() {
             <div className={styles['person-info__user-name']}>
               <div>{user.username}</div>
             </div>
-            <Avatar className={styles['person-info__avatar']} src={user.image} size={42} />
+            <Avatar onError={() => false} className={styles['person-info__avatar']} src={user.image} size={42} />
           </div>
         </Link>
         <button type="button" className={styles['log-out']} onClick={onLogOut}>

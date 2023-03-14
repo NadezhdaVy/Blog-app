@@ -7,6 +7,10 @@ a {
   text-decoration: none;
 }
 
+p {
+	word-wrap: break-word;
+}
+
 body {
   max-width: 1330px;
   margin: 0 auto;

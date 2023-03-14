@@ -14,10 +14,11 @@ function ArticlesList() {
 
   const totalPages = useSelector((state) => state.articles.totalPages)
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(0)
 
   const onChangePage = (page) => {
-    setCurrentPage(page)
+    console.log(page)
+    setCurrentPage((page - 1) * 10)
   }
 
   useEffect(() => {
