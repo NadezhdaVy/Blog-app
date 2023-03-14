@@ -31,6 +31,7 @@ function ArticlesItem({ article }) {
         <div>{author.username}</div>
         <div>{convertTime(updatedAt)}</div>
       </div>
+
       <Avatar onError={() => false} className={styles['person-info__avatar']} src={author.image} size={42} />
     </div>
   )

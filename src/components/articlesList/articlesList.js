@@ -17,7 +17,6 @@ function ArticlesList() {
   const [currentPage, setCurrentPage] = useState(0)
 
   const onChangePage = (page) => {
-    console.log(page)
     setCurrentPage((page - 1) * 10)
   }
 
