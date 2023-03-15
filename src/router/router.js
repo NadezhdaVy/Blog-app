@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <ArticlesList /> },
       {
-        path: articlesDetails('slug'),
+        path: articlesDetails(':slug'),
         element: <ArticleDetails />,
       },
       {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: editArticle('slug'),
+        path: editArticle(':slug'),
         element: (
           <PrivateRoute>
             <NewArticle formName="Edit article" />

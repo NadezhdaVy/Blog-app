@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import Popconfirm from '../popconfirm'
 import convertTime from '../../utils/formatDate'
 import RateItem from '../rateItem'
+import { articlesDetails, editArticle } from '../../router/routePaths'
 
 import styles from './articlesItem.module.scss'
 
@@ -62,7 +63,7 @@ function ArticlesItem({ article }) {
       title={
         <Space size={4} direction="vertical">
           <Space size={10}>
-            <Link className={styles['articles-item__title']} to={`articles/${article.slug}`}>
+            <Link className={styles['articles-item__title']} to={articlesDetails(article.slug)}>
               {article.title}
             </Link>
             <RateItem stars={article.favoritesCount} slug={article.slug} favorited={article.favorited} />
@@ -78,7 +79,7 @@ function ArticlesItem({ article }) {
             <Button>Delete</Button>
           </Popconfirm>
 
-          <Link to={`/articles/${article.slug}/edit`}>
+          <Link to={editArticle(article.slug)}>
             <Button>Edit</Button>
           </Link>
         </Space>
