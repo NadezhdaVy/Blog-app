@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom'
 
 import ErrorIndicator from '../errorIndicator'
 import { registerUser, clearState } from '../../redux/slices/authSlice'
+import { logIn } from '../../router/routePaths'
 
 import styles from './registerForm.module.scss'
 
@@ -140,7 +141,7 @@ function RegisterForm() {
               <Button className={styles.registerForm__button} type="primary" htmlType="submit">
                 Create
               </Button>
-              Already have an account?<Link to="/log-in"> Sign In.</Link>
+              Already have an account?<Link to={logIn}> Sign In.</Link>
             </Form.Item>
           </Form>
         </div>

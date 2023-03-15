@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Avatar } from 'antd'
 
+import { logIn } from '../../router/routePaths'
 import { logOut } from '../../redux/slices/authSlice'
 
 import styles from './navbar.module.scss'
@@ -23,7 +24,7 @@ function Navbar() {
   if (!userToken) {
     content = (
       <>
-        <Link to="/log-in">Log in</Link>
+        <Link to={logIn}>Log in</Link>
         <Link className={styles['sign-up']} to="sign-up">
           Sign Up
         </Link>

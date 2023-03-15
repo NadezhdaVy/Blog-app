@@ -3,6 +3,7 @@ import { Button, Form, Input } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { signUp } from '../../router/routePaths'
 import ErrorIndicator from '../errorIndicator'
 import { loginUser, clearState } from '../../redux/slices/authSlice'
 
@@ -80,7 +81,7 @@ function LoginForm() {
               <Button className={styles.loginForm__button} type="primary" htmlType="submit">
                 Log in
               </Button>
-              Don’t have an account?<Link to="/sign-up"> Sign Up.</Link>
+              Don’t have an account?<Link to={signUp}> Sign Up.</Link>
             </Form.Item>
           </Form>
         </div>
