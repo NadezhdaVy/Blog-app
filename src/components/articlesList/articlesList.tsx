@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { List } from 'antd'
 
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import ErrorIndicator from '../errorIndicator/errorIndicator'
 import { fetchArticles } from '../../redux/slices/articlesSlice'
 import PostsItem from '../articlesItem'
@@ -9,14 +9,14 @@ import PostsItem from '../articlesItem'
 import styles from './articlesList.module.scss'
 
 function ArticlesList() {
-  const dispath = useDispatch()
-  const { articles, error } = useSelector((state) => state.articles)
+  const dispath = useAppDispatch()
+  const { articles, error } = useAppSelector((state) => state.articles)
 
-  const totalPages = useSelector((state) => state.articles.totalPages)
+  const totalPages = useAppSelector((state) => state.articles.totalPages)
 
   const [currentPage, setCurrentPage] = useState(0)
 
-  const onChangePage = (page) => {
+  const onChangePage = (page: number): void => {
     setCurrentPage((page - 1) * 10)
   }
 
@@ -38,7 +38,7 @@ function ArticlesList() {
         total: totalPages,
         showSizeChanger: false,
       }}
-      className={styles['articles-list']}
+      className={styles.articlesList}
       grid={{ column: 1 }}
       dataSource={articles}
       renderItem={(article) => (

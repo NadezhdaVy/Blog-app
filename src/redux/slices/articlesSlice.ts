@@ -87,7 +87,7 @@ export const fetchArticle = createAsyncThunk<
 
 export const updateArticle = createAsyncThunk<
   Article,
-  FetchArticle & { slug: string },
+  FetchArticle,
   { state: RootState; rejectValue: string | MyKnownError }
 >('articles/updateArticle', async (values, { getState, rejectWithValue }) => {
   const token = getState().auth.userToken
@@ -222,5 +222,5 @@ export const { clearArticlesState } = articlesSlice.actions
 
 export const selectAllArticles = (state: RootState) => state.articles.articles
 
-export const selectArticleById = (state: RootState, articleSlug: string) =>
+export const selectArticleById = (state: RootState, articleSlug?: string) =>
   state.articles.articles.find((article) => article.slug === articleSlug)

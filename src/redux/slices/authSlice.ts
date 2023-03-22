@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+import { LogInData, RegisterData, UpdateData } from '../../ts/types'
 import { Status } from '../../ts/variables'
 import { User, AuthResponseError, MyKnownError } from '../../ts/interfaces'
 import { RootState } from '../store'
 import authHeaders from '../../api/authHeaders'
 import createMethod from '../../api/createMethod'
 import createUrl from '../../api/createUrl'
-
-type LogInData = Required<Pick<User, 'email' | 'password'>>
-type RegisterData = LogInData & { username: string }
-type UpdateData = Partial<User>
 
 type AuthResponseData = {
   user: User

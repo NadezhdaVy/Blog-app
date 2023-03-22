@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { clearState, getCurrentUserBytoken } from '../../redux/slices/authSlice'
 import Navbar from '../navbar'
 
 import styles from './app.module.scss'
 
 function App() {
-  const dispatch = useDispatch()
-  const { userToken, userInfo, status } = useSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
+  const { userToken, userInfo, status } = useAppSelector((state) => state.auth)
 
   useEffect(() => {
-    if (userToken && !userInfo.user) {
+    if (userToken && !userInfo.username) {
       dispatch(getCurrentUserBytoken())
     }
   }, [])

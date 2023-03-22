@@ -1,8 +1,9 @@
 import React from 'react'
 import { Card, Avatar, Tag, Space, Button, Skeleton } from 'antd'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
+import { useAppSelector } from '../../redux/store'
+import { Article } from '../../ts/interfaces'
 import Popconfirm from '../popconfirm'
 import convertTime from '../../utils/formatDate'
 import RateItem from '../rateItem'
@@ -10,8 +11,12 @@ import { articlesDetails, editArticle } from '../../router/routePaths'
 
 import styles from './articlesItem.module.scss'
 
-function ArticlesItem({ article }) {
-  const renderTags = ({ tagList }) => {
+type Props = {
+  article: Article
+}
+
+function ArticlesItem({ article }: Props) {
+  const renderTags = ({ tagList }: Article) => {
     let id = 1
     const renderedTags = tagList.map((tag) => (
       <Tag key={id++} className={styles.tag}>
@@ -20,24 +25,24 @@ function ArticlesItem({ article }) {
     ))
 
     return (
-      <Space size={1} className={styles['articles-item__tags']}>
+      <Space size={1} className={styles.tags}>
         {renderedTags}
       </Space>
     )
   }
 
-  const acountDescription = ({ author, updatedAt }) => (
-    <div className={styles['person-info']}>
-      <div className={styles['person-info__description']}>
+  const acountDescription = ({ author, updatedAt }: Article) => (
+    <div className={styles.personInfo}>
+      <div className={styles.description}>
         <div>{author.username}</div>
         <div>{convertTime(updatedAt)}</div>
       </div>
 
-      <Avatar onError={() => false} className={styles['person-info__avatar']} src={author.image} size={42} />
+      <Avatar onError={() => false} className={styles.avatar} src={author.image} size={42} />
     </div>
   )
 
-  const { status } = useSelector((state) => state.articles)
+  const { status } = useAppSelector((state) => state.articles)
   if (status === 'loading') {
     return (
       <>
@@ -58,12 +63,12 @@ function ArticlesItem({ article }) {
   return (
     <Card
       bordered={false}
-      className={styles['articles-item']}
+      className={styles.articlesItem}
       extra={acountDescription(article)}
       title={
         <Space size={4} direction="vertical">
           <Space size={10}>
-            <Link className={styles['articles-item__title']} to={articlesDetails(article.slug)}>
+            <Link className={styles.title} to={articlesDetails(article.slug)}>
               {article.title}
             </Link>
             <RateItem stars={article.favoritesCount} slug={article.slug} favorited={article.favorited} />
@@ -72,8 +77,8 @@ function ArticlesItem({ article }) {
         </Space>
       }
     >
-      <div className={styles['articles-item-container']}>
-        <p className={styles['articles-item__content']}>{article.description}</p>
+      <div className={styles.container}>
+        <p className={styles.content}>{article.description}</p>
         <Space className={styles.buttons}>
           <Popconfirm slug={article.slug}>
             <Button>Delete</Button>

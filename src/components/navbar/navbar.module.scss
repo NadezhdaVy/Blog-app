@@ -1,19 +1,19 @@
 .nav {
   background-color: white;
-  .nav-content {
+  .navContent {
     padding: 1em;
 
-    .person-info {
+    .personInfo {
       display: flex;
       align-items: center;
       margin-right: 1.5em;
 
-      &__user-name {
+      .userName {
         margin-right: 0.5em;
       }
     }
 
-    .nav-links {
+    .navLinks {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -38,19 +38,19 @@
         cursor: pointer;
       }
 
-      & > a.create-article {
+      & > a.createArticle {
         padding: 0.4em 0.6em;
         margin-right: 1.5em;
       }
 
-      & > a.sign-up,
-      .create-article {
+      & > a.signUp,
+      .createArticle {
         border: 2px solid #99a63c;
         color: #99a63c;
         border-radius: 5px;
       }
 
-      & > button.log-out {
+      & > button.logOut {
         border: 2px solid rgba(0, 0, 0, 0.75);
         color: rgba(0, 0, 0, 0.75);
         background: none;

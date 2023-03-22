@@ -24,7 +24,7 @@ export interface Article {
   }
 }
 
-export type FetchArticle = Pick<Article, 'title' | 'description' | 'body' | 'tagList'>
+export type FetchArticle = Pick<Article, 'title' | 'description' | 'body' | 'tagList'> & { slug?: string }
 
 export interface MyKnownError {
   body: [string]

@@ -1,7 +1,7 @@
 @use '../../styles/shadow.scss';
 
 .articleDetails,
-.articleDetails-hidden {
+.articleDetailsHidden {
   width: 80%;
   margin: 0 auto;
   margin-top: 1.5em;
@@ -30,7 +30,7 @@
     }
   }
 
-  .article-body {
+  .articleBody {
     p,
     h2,
     h1,
@@ -46,7 +46,7 @@
   margin-top: 5em;
 }
 
-.articleDetails-hidden {
+.articleDetailsHidden {
   & > div:first-child > div:last-child > div > div {
     display: none;
   }

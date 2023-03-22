@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 import { Avatar } from 'antd'
 
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { logIn, signUp, profile, newArticle } from '../../router/routePaths'
 import { logOut } from '../../redux/slices/authSlice'
 
 import styles from './navbar.module.scss'
 
 function Navbar() {
-  const { userInfo: user, userToken } = useSelector((state) => state.auth)
+  const { userInfo: user, userToken } = useAppSelector((state) => state.auth)
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const onLogOut = () => {
     localStorage.removeItem('token')
     dispatch(logOut())
@@ -25,7 +25,7 @@ function Navbar() {
     content = (
       <>
         <Link to={logIn}>Log in</Link>
-        <Link className={styles['sign-up']} to={signUp}>
+        <Link className={styles.signUp} to={signUp}>
           Sign Up
         </Link>
       </>
@@ -33,18 +33,18 @@ function Navbar() {
   } else {
     content = (
       <>
-        <Link className={styles['create-article']} to={newArticle}>
+        <Link className={styles.createArticle} to={newArticle}>
           Create article
         </Link>
         <Link to={profile}>
-          <div className={styles['person-info']}>
-            <div className={styles['person-info__user-name']}>
+          <div className={styles.personInfo}>
+            <div className={styles.userName}>
               <div>{user.username}</div>
             </div>
-            <Avatar onError={() => false} className={styles['person-info__avatar']} src={user.image} size={42} />
+            <Avatar onError={() => false} className={styles.avatar} src={user.image} size={42} />
           </div>
         </Link>
-        <button type="button" className={styles['log-out']} onClick={onLogOut}>
+        <button type="button" className={styles.logOut} onClick={onLogOut}>
           Log out
         </button>
       </>
@@ -53,8 +53,8 @@ function Navbar() {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles['nav-content']}>
-        <div className={styles['nav-links']}>
+      <div className={styles.navContent}>
+        <div className={styles.navLinks}>
           <Link to="/">Realworld Blog</Link>
           {content}
         </div>

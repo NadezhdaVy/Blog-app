@@ -1,15 +1,15 @@
-.registerForm-container {
-  composes: form-container from '../../styles/form.scss';
+.registerFormContainer {
+  composes: formContainer from '../../styles/form.scss';
 }
 
-.registerForm-main {
-  composes: form-main from '../../styles/form.scss';
+.registerFormMain {
+  composes: formMain from '../../styles/form.scss';
   text-align: center;
 
   .registerForm {
     padding-top: 1em;
 
-    &__button {
+    .registerFormButton {
       width: 100%;
       margin-top: 1em;
       margin-bottom: 1em;
@@ -19,7 +19,7 @@
       }
     }
 
-    &__input {
+    .registerFormInput {
       padding: 0.7em;
       margin-bottom: 0.5em;
     }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Spin } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 
+import { Article } from '../../ts/interfaces'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import ErrorIndicator from '../errorIndicator'
 import { clearArticlesState } from '../../redux/slices/articlesSlice'
 import { getResource } from '../../api/api'
@@ -16,21 +17,25 @@ function ArticleDetails() {
   const params = useParams()
   const { slug } = params
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [currentArticle, setCurrentArtticle] = useState(null)
-  const [error, setError] = useState(null)
+  const [currentArticle, setCurrentArtticle] = useState<null | Article>(null)
+  const [error, setError] = useState<null | Error>(null)
   const [loading, setLoading] = useState(true)
-  const { status } = useSelector((state) => state.articles)
-  const { userInfo, userToken } = useSelector((state) => state.auth)
+  const { status } = useAppSelector((state) => state.articles)
+  const { userInfo, userToken } = useAppSelector((state) => state.auth)
 
   async function getCurrentArticle() {
+    if (!slug || !userToken) {
+      throw new Error('no slug')
+    }
     try {
       setLoading(true)
       const response = await getResource(slug, userToken)
       setCurrentArtticle(response)
     } catch (e) {
-      setError(e)
+      const err = e as Error
+      setError(err)
     } finally {
       setLoading(false)
     }
@@ -63,11 +68,11 @@ function ArticleDetails() {
   return (
     <div
       className={
-        userInfo.username === currentArticle.author.username ? styles.articleDetails : styles['articleDetails-hidden']
+        userInfo.username === currentArticle.author.username ? styles.articleDetails : styles.articleDetailsHidden
       }
     >
       <ArticlesItem article={currentArticle} />
-      <div className={styles['articleDetails-body']}>
+      <div className={styles.articleDetailsBody}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentArticle.body}</ReactMarkdown>
       </div>
     </div>

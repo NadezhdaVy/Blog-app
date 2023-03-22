@@ -1,9 +1,15 @@
 import React from 'react'
 import { Alert } from 'antd'
 
+import { MyKnownError } from '../../ts/interfaces'
+
 import styles from './errorIndicator.module.scss'
 
-function ErrorIndicator({ error }) {
+type Props = {
+  error: MyKnownError | string
+}
+
+function ErrorIndicator({ error }: Props) {
   let errorMessage
   if (typeof error === 'object') {
     const errorName = Object.keys(error)[0]

@@ -1,10 +1,11 @@
 import { Button, Form, Input, Checkbox } from 'antd'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 
-import ErrorIndicator from '../errorIndicator'
 import { registerUser, clearState } from '../../redux/slices/authSlice'
+import { RegisterData } from '../../ts/types'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import ErrorIndicator from '../errorIndicator'
 import { logIn } from '../../router/routePaths'
 
 import styles from './registerForm.module.scss'
@@ -12,8 +13,8 @@ import styles from './registerForm.module.scss'
 function RegisterForm() {
   const navigate = useNavigate()
 
-  const { status } = useSelector((state) => state.auth)
-  const dispatch = useDispatch()
+  const { status } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -27,17 +28,17 @@ function RegisterForm() {
     }
   }, [status])
 
-  const { error } = useSelector((state) => state.auth)
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+  const { error } = useAppSelector((state) => state.auth)
+  const onFinish = (values: RegisterData) => {
+    // console.log('Received values of form: ', values)
     dispatch(registerUser(values))
   }
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
   return (
     <>
       {errorMessage}
-      <div className={styles['registerForm-container']}>
-        <div className={styles['registerForm-main']}>
+      <div className={styles.registerFormContainer}>
+        <div className={styles.registerFormMain}>
           Create new Account
           <Form
             className={styles.registerForm}
@@ -68,7 +69,7 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input className={styles.registerForm__input} placeholder="Username" />
+              <Input className={styles.registerFormInput} placeholder="Username" />
             </Form.Item>
             <Form.Item
               name="email"
@@ -84,7 +85,7 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input className={styles.registerForm__input} placeholder="Email address" />
+              <Input className={styles.registerFormInput} placeholder="Email address" />
             </Form.Item>
 
             <Form.Item
@@ -99,7 +100,7 @@ function RegisterForm() {
                 },
               ]}
             >
-              <Input.Password className={styles.registerForm__input} placeholder="Password" />
+              <Input.Password className={styles.registerFormInput} placeholder="Password" />
             </Form.Item>
 
             <Form.Item
@@ -121,7 +122,7 @@ function RegisterForm() {
                 }),
               ]}
             >
-              <Input.Password className={styles.registerForm__input} placeholder="Password" />
+              <Input.Password className={styles.registerFormInput} placeholder="Password" />
             </Form.Item>
 
             <Form.Item
@@ -138,7 +139,7 @@ function RegisterForm() {
             </Form.Item>
 
             <Form.Item>
-              <Button className={styles.registerForm__button} type="primary" htmlType="submit">
+              <Button className={styles.registerFormButton} type="primary" htmlType="submit">
                 Create
               </Button>
               Already have an account?<Link to={logIn}> Sign In.</Link>

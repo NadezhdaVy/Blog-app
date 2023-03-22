@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react'
 import { Input, Form, Button } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { FetchArticle } from '../../ts/interfaces'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import ErrorIndicator from '../errorIndicator/errorIndicator'
 import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice'
 
 import styles from './newArticle.module.scss'
 
-function NewArticle({ formName }) {
+type Props = {
+  formName: string
+}
+
+function NewArticle({ formName }: Props) {
   const { slug } = useParams()
-  const item = useSelector((state) => selectArticleById(state, slug))
+  const item = useAppSelector((state) => selectArticleById(state, slug))
   const navigate = useNavigate()
-  const { error } = useSelector((state) => state.articles)
+  const { error } = useAppSelector((state) => state.articles)
   const [form] = Form.useForm()
-  const dispatch = useDispatch()
-  const onFinish = (values) => {
+  const dispatch = useAppDispatch()
+  const onFinish = (values: FetchArticle) => {
     if (formName === 'Create new article') {
       dispatch(fetchArticle(values))
     }
@@ -25,7 +30,7 @@ function NewArticle({ formName }) {
     }
     form.resetFields()
   }
-  const { status } = useSelector((state) => state.articles)
+  const { status } = useAppSelector((state) => state.articles)
   useEffect(() => {
     dispatch(clearArticlesState())
   }, [])
@@ -44,13 +49,13 @@ function NewArticle({ formName }) {
   const errorMesage = error ? <ErrorIndicator error="something went wrong" /> : null
 
   return (
-    <div className={styles['newArticle-container']}>
+    <div className={styles.newArticleContainer}>
       {errorMesage}
-      <div className={styles['newArticle-main']}>
-        <h1 className={styles.newArticle__title}>{formName}</h1>
+      <div className={styles.newArticleMain}>
+        <h1 className={styles.newArticleTitle}>{formName}</h1>
         <Form
           form={form}
-          className={styles.NewArticle}
+          className={styles.newArticle}
           layout="vertical"
           name="newArticle"
           onFinish={onFinish}
@@ -59,18 +64,18 @@ function NewArticle({ formName }) {
           requiredMark={false}
         >
           <Form.Item name="title" label="Title" rules={[{ min: 3, max: 40, required: true, whitespace: true }]}>
-            <Input className={styles.newArticle__input} />
+            <Input className={styles.newArticleInput} />
           </Form.Item>
           <Form.Item
             name="description"
             label="Short description"
             rules={[{ min: 3, max: 400, required: true, whitespace: true }]}
           >
-            <Input className={styles.newArticle__input} />
+            <Input className={styles.newArticleInput} />
           </Form.Item>
 
           <Form.Item name="body" label="Text" rules={[{ min: 3, required: true, whitespace: true }]}>
-            <Input.TextArea className={styles.newArticle__input} />
+            <Input.TextArea className={styles.newArticleInput} />
           </Form.Item>
 
           <Form.List name="tagList">
@@ -125,7 +130,7 @@ function NewArticle({ formName }) {
             )}
           </Form.List>
           <Form.Item>
-            <Button size="large" className={styles['newArticle__submit-button']} type="primary" htmlType="submit">
+            <Button size="large" className={styles.submitButton} type="primary" htmlType="submit">
               Send
             </Button>
           </Form.Item>

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react'
 import { Button, Form, Input } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { signUp } from '../../router/routePaths'
 import ErrorIndicator from '../errorIndicator'
 import { loginUser, clearState } from '../../redux/slices/authSlice'
+import { LogInData } from '../../ts/types'
 
 import styles from './loginForm.module.scss'
 
 function LoginForm() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { status } = useSelector((state) => state.auth)
-  const { error } = useSelector((state) => state.auth)
+  const { status, error } = useAppSelector((state) => state.auth)
 
   useEffect(() => {
     dispatch(clearState())
@@ -26,7 +26,7 @@ function LoginForm() {
     }
   }, [status])
 
-  const onFinish = (values) => {
+  const onFinish = (values: LogInData) => {
     dispatch(loginUser(values))
   }
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
@@ -34,8 +34,8 @@ function LoginForm() {
   return (
     <>
       {errorMessage}
-      <div className={styles['loginForm-container']}>
-        <div className={styles['loginForm-inner']}>
+      <div className={styles.loginFormContainer}>
+        <div className={styles.loginFormInner}>
           <Form
             requiredMark={false}
             layout="vertical"
@@ -60,7 +60,7 @@ function LoginForm() {
                 },
               ]}
             >
-              <Input className={styles.loginForm__input} placeholder="Email address" />
+              <Input className={styles.loginFormInput} placeholder="Email address" />
             </Form.Item>
             <Form.Item
               name="password"
@@ -74,11 +74,11 @@ function LoginForm() {
                 },
               ]}
             >
-              <Input className={styles.loginForm__input} type="password" placeholder="Password" />
+              <Input className={styles.loginFormInput} type="password" placeholder="Password" />
             </Form.Item>
 
             <Form.Item>
-              <Button className={styles.loginForm__button} type="primary" htmlType="submit">
+              <Button className={styles.loginFormButton} type="primary" htmlType="submit">
                 Log in
               </Button>
               Don’t have an account?<Link to={signUp}> Sign Up.</Link>

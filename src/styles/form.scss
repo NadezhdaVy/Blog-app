@@ -1,6 +1,6 @@
 @use './shadow';
 
-.form-container {
+.formContainer {
   justify-content: center;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.form-main {
+.formMain {
   background-color: white;
   padding: 1.5em;
   //text-align: center;

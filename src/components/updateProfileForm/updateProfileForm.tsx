@@ -1,17 +1,18 @@
 import { Button, Form, Input } from 'antd'
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import ErrorIndicator from '../errorIndicator'
 import { clearState, updateProfile } from '../../redux/slices/authSlice'
+import { UpdateData } from '../../ts/types'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import ErrorIndicator from '../errorIndicator'
 
 import styles from './updateProfileForm.module.scss'
 
 function UpdateProfileForm() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { userInfo: user, status, error } = useSelector((state) => state.auth)
+  const { userInfo: user, status, error } = useAppSelector((state) => state.auth)
   const { username, email } = user
 
   const [form] = Form.useForm()
@@ -23,15 +24,15 @@ function UpdateProfileForm() {
     }
   }, [status])
 
-  const onFinish = (values) => {
+  const onFinish = (values: UpdateData) => {
     dispatch(updateProfile(values))
   }
 
   const errorMessage = error ? <ErrorIndicator error={error} /> : null
   return (
-    <div className={styles['updateProfileForm-container']}>
+    <div className={styles.updateProfileFormContainer}>
       {errorMessage}
-      <div className={styles['updateProfileForm-main']}>
+      <div className={styles.updateProfileFormMain}>
         Edit Profile
         <Form
           className={styles.updateProfileForm}
@@ -59,7 +60,7 @@ function UpdateProfileForm() {
               },
             ]}
           >
-            <Input className={styles.updateProfileForm__input} placeholder="Username" />
+            <Input className={styles.updateProfileFormInput} placeholder="Username" />
           </Form.Item>
           <Form.Item
             initialValue={email}
@@ -76,7 +77,7 @@ function UpdateProfileForm() {
               },
             ]}
           >
-            <Input className={styles.updateProfileForm__input} placeholder="email" />
+            <Input className={styles.updateProfileFormInput} placeholder="email" />
           </Form.Item>
 
           <Form.Item
@@ -91,7 +92,7 @@ function UpdateProfileForm() {
               },
             ]}
           >
-            <Input.Password className={styles.updateProfileForm__input} placeholder="New password" />
+            <Input.Password className={styles.updateProfileFormInput} placeholder="New password" />
           </Form.Item>
           <Form.Item
             name="image"
@@ -106,10 +107,10 @@ function UpdateProfileForm() {
               },
             ]}
           >
-            <Input className={styles.updateProfileForm__input} placeholder="avatar" />
+            <Input className={styles.updateProfileFormInput} placeholder="avatar" />
           </Form.Item>
           <Form.Item>
-            <Button className={styles.updateProfileForm__button} type="primary" htmlType="submit">
+            <Button className={styles.updateProfileFormButton} type="primary" htmlType="submit">
               Save
             </Button>
           </Form.Item>
