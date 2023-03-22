@@ -62,7 +62,7 @@ function ArticleDetails() {
 
   if (error || !currentArticle) {
     err()
-    return <ErrorIndicator error="The Article wasn't found" />
+    return <ErrorIndicator error="The Article was not found" />
   }
 
   return (
