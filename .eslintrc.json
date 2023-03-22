@@ -3,6 +3,24 @@
     "browser": true,
     "es2021": true
   },
+  "overrides": [
+	{ 
+		"env": { "browser": true, "es2021": true},
+		"files": ["**/*.ts", "**/*.tsx"],
+		"extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+		"parser": "@typescript-eslint/parser",
+		"plugins": ["@typescript-eslint"],
+		"parserOptions": {
+			"ecmaFeatures": { "jsx": true },
+			"ecmaVersion": "latest",
+			"sourceType": "module",
+			"project": "./tsconfig.json"
+		 },
+		 "rules": {
+			"@typescript-eslint/no-non-null-assertion": "error"
+		 }
+	}
+  ],
   "ignorePatterns": ["node_modules", "dist", "build"],
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parser": "@babel/eslint-parser",
@@ -16,8 +34,18 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
+	"import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ],
     "prettier/prettier": "error",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".ts", ".jsx", ".tsx"] }],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "react/prop-types": 0,
