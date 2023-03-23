@@ -1,6 +1,6 @@
 @use '../../styles/shadow';
 
-.updateProfileForm-container {
+.updateProfileFormContainer {
   composes: formContainer from '../../styles/form.scss';
 }
 .updateProfileFormMain {

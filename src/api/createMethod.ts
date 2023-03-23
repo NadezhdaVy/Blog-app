@@ -17,6 +17,7 @@ const createMethod = (method: string, bodyData?: object, tokenData?: string) => 
   }
   return {
     method: method.toUpperCase(),
+    headers: { 'Content-Type': 'application/json' },
   }
 }
 export default createMethod

@@ -30,22 +30,18 @@ export const fetchArticles = createAsyncThunk<
   const token = getState().auth.userToken
 
   try {
-    if (token) {
-      const fetchHeaders = authHeaders(token)
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: fetchHeaders,
-      })
-      if (response.ok) {
-        const body: { articles: [Article]; articlesCount: number } = await response.json()
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: token ? authHeaders(token) : { 'Content-Type': 'application/json' },
+    })
+    if (response.ok) {
+      const body: { articles: [Article]; articlesCount: number } = await response.json()
 
-        return body
-      }
-      const error: AuthResponseError = await response.clone().json()
-
-      return rejectWithValue(error.errors)
+      return body
     }
-    throw new Error('no token')
+    const error: AuthResponseError = await response.clone().json()
+
+    return rejectWithValue(error.errors)
   } catch (e) {
     const error = e as Error
     return rejectWithValue(error.message)
