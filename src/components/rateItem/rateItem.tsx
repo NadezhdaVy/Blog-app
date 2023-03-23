@@ -45,7 +45,7 @@ function RateItem({ stars, slug, favorited }: Props) {
         count={1}
         character={<HeartOutlined style={{ color: like ? 'red' : 'black' }} className={styles.rateIcon} />}
       />
-      <span>{rating}</span>
+      <span style={{ position: 'relative', bottom: -1 }}>{rating}</span>
     </Space>
   )
 }
