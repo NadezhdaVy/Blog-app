@@ -1,2 +1,2 @@
 vercel
-https://blog-app-nadezhdavy.vercel.app
+https://blog-omega-ten-32.vercel.app 
