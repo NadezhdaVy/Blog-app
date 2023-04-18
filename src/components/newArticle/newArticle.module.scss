@@ -1,9 +1,9 @@
 .newArticleContainer {
-	composes: formContainer from '../../styles/form.scss';
- }
+  composes: formContainer from '../../styles/form.scss';
+}
 
 .newArticleMain {
-composes: formMain from '../../styles/form.scss';
+  composes: formMain from '../../styles/form.scss';
   max-width: fit-content;
 
   .deleteButton {

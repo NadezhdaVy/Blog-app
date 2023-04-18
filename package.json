@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "vite --open",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "format": "npx prettier --write .",
