@@ -1,35 +1,35 @@
-import React from 'react'
-import { Card, Avatar, Tag, Space, Button, Skeleton } from 'antd'
-import { Link } from 'react-router-dom'
+import { Card, Avatar, Tag, Space, Button, Skeleton } from 'antd';
+import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '../../redux/store'
-import { Article } from '../../ts/interfaces'
-import Popconfirm from '../popconfirm'
-import convertTime from '../../utils/formatDate'
-import RateItem from '../rateItem'
-import { articlesDetails, editArticle } from '../../router/routePaths'
+import { useAppSelector } from '@/redux/store';
+import { Article } from '@/ts/interfaces';
+import Popconfirm from '@components/popconfirm';
+import convertTime from '@/utils/formatDate';
+import RateItem from '@components/rateItem';
 
-import styles from './articlesItem.module.scss'
+import { articlesDetails, editArticle } from '../../router/routePaths';
+
+import styles from './articlesItem.module.scss';
 
 type Props = {
-  article: Article
-}
+  article: Article;
+};
 
 function ArticlesItem({ article }: Props) {
   const renderTags = ({ tagList }: Article) => {
-    let id = 1
+    let id = 1;
     const renderedTags = tagList.map((tag) => (
-      <Tag key={id++} className={styles.tag}>
+      <Tag key={(id += 1)} className={styles.tag}>
         <a href="#top">{tag}</a>
       </Tag>
-    ))
+    ));
 
     return (
       <Space size={1} className={styles.tags}>
         {renderedTags}
       </Space>
-    )
-  }
+    );
+  };
 
   const acountDescription = ({ author, updatedAt }: Article) => (
     <div className={styles.personInfo}>
@@ -40,9 +40,9 @@ function ArticlesItem({ article }: Props) {
 
       <Avatar onError={() => false} className={styles.avatar} src={author.image} size={42} />
     </div>
-  )
+  );
 
-  const { status } = useAppSelector((state) => state.articles)
+  const { status } = useAppSelector((state) => state.articles);
   if (status === 'loading') {
     return (
       <>
@@ -57,7 +57,7 @@ function ArticlesItem({ article }: Props) {
           }}
         />
       </>
-    )
+    );
   }
 
   return (
@@ -90,7 +90,7 @@ function ArticlesItem({ article }: Props) {
         </Space>
       </div>
     </Card>
-  )
+  );
 }
 
-export default ArticlesItem
+export default ArticlesItem;

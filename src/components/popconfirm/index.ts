@@ -1,3 +1,3 @@
-import Popconfirm from './popconfirm'
+import Popconfirm from './popconfirm';
 
-export default Popconfirm
+export default Popconfirm;

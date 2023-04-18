@@ -1,25 +1,24 @@
-import React from 'react'
-import { Alert } from 'antd'
+import { Alert } from 'antd';
 
-import { MyKnownError } from '../../ts/interfaces'
+import { MyKnownError } from '@/ts/interfaces';
 
-import styles from './errorIndicator.module.scss'
+import styles from './errorIndicator.module.scss';
 
 type Props = {
-  error: MyKnownError | string
-}
+  error: MyKnownError | string;
+};
 
 function ErrorIndicator({ error }: Props) {
-  let errorMessage
+  let errorMessage;
   if (typeof error === 'object') {
-    const errorName = Object.keys(error)[0]
-    const errorValue = Object.values(error)[0]
-    errorMessage = `${errorName} ${errorValue}`
+    const errorName = Object.keys(error)[0];
+    const errorValue = Object.values(error)[0];
+    errorMessage = `${errorName} ${errorValue}`;
   } else {
-    errorMessage = error
+    errorMessage = error;
   }
 
-  return <Alert className={styles.error} message={errorMessage} type="error" />
+  return <Alert className={styles.error} message={errorMessage} type="error" />;
 }
 
-export default ErrorIndicator
+export default ErrorIndicator;

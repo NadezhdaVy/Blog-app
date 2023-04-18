@@ -1,2 +1,2 @@
-export const formContainer: string
-export const formMain: string
+export const formContainer: string;
+export const formMain: string;

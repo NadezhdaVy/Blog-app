@@ -1,3 +1,3 @@
-import RateItem from './rateItem'
+import RateItem from './rateItem';
 
-export default RateItem
+export default RateItem;

@@ -1,3 +1,3 @@
-import NewArticle from './newArticle'
+import NewArticle from './newArticle';
 
-export default NewArticle
+export default NewArticle;

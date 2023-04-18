@@ -1,19 +1,19 @@
-import React from 'react'
-import { message, Popconfirm as Confirm } from 'antd'
+import * as React from 'react';
+import { message, Popconfirm as Confirm } from 'antd';
 
-import { useAppDispatch } from '../../redux/store'
-import { deleteArticle } from '../../redux/slices/articlesSlice'
+import { useAppDispatch } from '../../redux/store';
+import { deleteArticle } from '../../redux/slices/articlesSlice';
 
 type Props = {
-  children: React.ReactNode
-  slug: string
-}
+  children: React.ReactNode;
+  slug: string;
+};
 
 function Popconfirm({ children, slug }: Props) {
   const cancel = () => {
-    message.error('Click on No')
-  }
-  const dispatch = useAppDispatch()
+    message.error('Click on No');
+  };
+  const dispatch = useAppDispatch();
   return (
     <Confirm
       placement="topLeft"
@@ -25,7 +25,7 @@ function Popconfirm({ children, slug }: Props) {
     >
       {children}
     </Confirm>
-  )
+  );
 }
 
-export default Popconfirm
+export default Popconfirm;

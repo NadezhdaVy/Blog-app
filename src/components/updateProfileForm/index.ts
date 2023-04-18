@@ -1,3 +1,3 @@
-import UpdateProfileForm from './updateProfileForm'
+import UpdateProfileForm from './updateProfileForm';
 
-export default UpdateProfileForm
+export default UpdateProfileForm;

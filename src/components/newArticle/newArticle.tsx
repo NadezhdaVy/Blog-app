@@ -1,52 +1,53 @@
-import React, { useEffect } from 'react'
-import { Input, Form, Button } from 'antd'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect } from 'react';
+import { Input, Form, Button } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { FetchArticle } from '../../ts/interfaces'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import ErrorIndicator from '../errorIndicator/errorIndicator'
-import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice'
+import { FetchArticle } from '@/ts/interfaces';
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import ErrorIndicator from '@components/errorIndicator';
 
-import styles from './newArticle.module.scss'
+import { clearArticlesState, selectArticleById, fetchArticle, updateArticle } from '../../redux/slices/articlesSlice';
+
+import styles from './newArticle.module.scss';
 
 type Props = {
-  formName: string
-}
+  formName: string;
+};
 
 function NewArticle({ formName }: Props) {
-  const { slug } = useParams()
-  const item = useAppSelector((state) => selectArticleById(state, slug))
-  const navigate = useNavigate()
-  const { error } = useAppSelector((state) => state.articles)
-  const [form] = Form.useForm()
-  const dispatch = useAppDispatch()
+  const { slug } = useParams();
+  const item = useAppSelector((state) => selectArticleById(state, slug));
+  const navigate = useNavigate();
+  const { error } = useAppSelector((state) => state.articles);
+  const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
   const onFinish = (values: FetchArticle) => {
     if (formName === 'Create new article') {
-      dispatch(fetchArticle(values))
+      dispatch(fetchArticle(values));
     }
     if (formName === 'Edit article') {
-      const valuesWithSlug = { ...values, slug }
-      dispatch(updateArticle(valuesWithSlug))
+      const valuesWithSlug = { ...values, slug };
+      dispatch(updateArticle(valuesWithSlug));
     }
-    form.resetFields()
-  }
-  const { status } = useAppSelector((state) => state.articles)
+    form.resetFields();
+  };
+  const { status } = useAppSelector((state) => state.articles);
   useEffect(() => {
-    dispatch(clearArticlesState())
-  }, [])
+    dispatch(clearArticlesState());
+  }, []);
 
   useEffect(() => {
     if ((formName === 'Edit article' && !item) || status === 'succeeded') {
-      dispatch(clearArticlesState())
-      navigate('/')
+      dispatch(clearArticlesState());
+      navigate('/');
     }
-  }, [status, formName])
+  }, [status, formName]);
 
   const initialValues = item
     ? { title: item.title, tagList: item.tagList, description: item.description, body: item.body }
-    : { tagList: ['programming'] }
+    : { tagList: ['programming'] };
 
-  const errorMesage = error ? <ErrorIndicator error="something went wrong" /> : null
+  const errorMesage = error ? <ErrorIndicator error="something went wrong" /> : null;
 
   return (
     <div className={styles.newArticleContainer}>
@@ -106,7 +107,7 @@ function NewArticle({ formName }: Props) {
                       <Button
                         className={styles.deleteButton}
                         onClick={() => {
-                          remove(field.name)
+                          remove(field.name);
                         }}
                       >
                         Delete
@@ -137,7 +138,7 @@ function NewArticle({ formName }: Props) {
         </Form>
       </div>
     </div>
-  )
+  );
 }
 
-export default NewArticle
+export default NewArticle;

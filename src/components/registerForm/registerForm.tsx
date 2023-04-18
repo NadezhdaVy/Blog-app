@@ -1,39 +1,39 @@
-import { Button, Form, Input, Checkbox } from 'antd'
-import React, { useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Button, Form, Input, Checkbox } from 'antd';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-import { registerUser, clearState } from '../../redux/slices/authSlice'
-import { RegisterData } from '../../ts/types'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import ErrorIndicator from '../errorIndicator'
-import { logIn } from '../../router/routePaths'
+import { registerUser, clearState } from '../../redux/slices/authSlice';
+import { RegisterData } from '../../ts/types';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import ErrorIndicator from '../errorIndicator';
+import { logIn } from '../../router/routePaths';
 
-import styles from './registerForm.module.scss'
+import styles from './registerForm.module.scss';
 
 function RegisterForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { status } = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
-  const [form] = Form.useForm()
+  const { status } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    dispatch(clearState())
-  }, [])
+    dispatch(clearState());
+  }, []);
 
   useEffect(() => {
     if (status === 'succeeded') {
-      dispatch(clearState())
-      navigate('/')
+      dispatch(clearState());
+      navigate('/');
     }
-  }, [status])
+  }, [status]);
 
-  const { error } = useAppSelector((state) => state.auth)
+  const { error } = useAppSelector((state) => state.auth);
   const onFinish = (values: RegisterData) => {
     // console.log('Received values of form: ', values)
-    dispatch(registerUser(values))
-  }
-  const errorMessage = error ? <ErrorIndicator error={error} /> : null
+    dispatch(registerUser(values));
+  };
+  const errorMessage = error ? <ErrorIndicator error={error} /> : null;
   return (
     <>
       {errorMessage}
@@ -115,9 +115,9 @@ function RegisterForm() {
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
-                      return Promise.resolve()
+                      return Promise.resolve();
                     }
-                    return Promise.reject(new Error('Passwords must match'))
+                    return Promise.reject(new Error('Passwords must match'));
                   },
                 }),
               ]}
@@ -148,6 +148,6 @@ function RegisterForm() {
         </div>
       </div>
     </>
-  )
+  );
 }
-export default RegisterForm
+export default RegisterForm;

@@ -1,1 +1,11 @@
 node_modules/
+build
+dist
+/.vscode
+/.git
+.prettierrc
+.eslintrc.json
+vite-env.d.ts
+.eslintrc.json
+vite.config.ts
+.husky

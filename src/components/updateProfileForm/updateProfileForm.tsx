@@ -1,34 +1,34 @@
-import { Button, Form, Input } from 'antd'
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Button, Form, Input } from 'antd';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { clearState, updateProfile } from '../../redux/slices/authSlice'
-import { UpdateData } from '../../ts/types'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import ErrorIndicator from '../errorIndicator'
+import { clearState, updateProfile } from '../../redux/slices/authSlice';
+import { UpdateData } from '../../ts/types';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import ErrorIndicator from '../errorIndicator';
 
-import styles from './updateProfileForm.module.scss'
+import styles from './updateProfileForm.module.scss';
 
 function UpdateProfileForm() {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { userInfo: user, status, error } = useAppSelector((state) => state.auth)
-  const { username, email } = user
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { userInfo: user, status, error } = useAppSelector((state) => state.auth);
+  const { username, email } = user;
 
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (status === 'succeeded') {
-      dispatch(clearState())
-      navigate('/')
+      dispatch(clearState());
+      navigate('/');
     }
-  }, [status])
+  }, [status]);
 
   const onFinish = (values: UpdateData) => {
-    dispatch(updateProfile(values))
-  }
+    dispatch(updateProfile(values));
+  };
 
-  const errorMessage = error ? <ErrorIndicator error={error} /> : null
+  const errorMessage = error ? <ErrorIndicator error={error} /> : null;
   return (
     <div className={styles.updateProfileFormContainer}>
       {errorMessage}
@@ -117,6 +117,6 @@ function UpdateProfileForm() {
         </Form>
       </div>
     </div>
-  )
+  );
 }
-export default UpdateProfileForm
+export default UpdateProfileForm;

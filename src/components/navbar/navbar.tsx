@@ -1,25 +1,24 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Avatar } from 'antd'
+import { Link, useNavigate } from 'react-router-dom';
+import { Avatar } from 'antd';
 
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import { logIn, signUp, profile, newArticle } from '../../router/routePaths'
-import { logOut } from '../../redux/slices/authSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { logIn, signUp, profile, newArticle } from '@/router/routePaths';
+import { logOut } from '@/redux/slices/authSlice';
 
-import styles from './navbar.module.scss'
+import styles from './navbar.module.scss';
 
 function Navbar() {
-  const { userInfo: user, userToken } = useAppSelector((state) => state.auth)
+  const { userInfo: user, userToken } = useAppSelector((state) => state.auth);
 
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const onLogOut = () => {
-    localStorage.removeItem('token')
-    dispatch(logOut())
-    navigate(logIn)
-  }
+    localStorage.removeItem('token');
+    dispatch(logOut());
+    navigate(logIn);
+  };
 
-  let content
+  let content;
 
   if (!userToken) {
     content = (
@@ -29,7 +28,7 @@ function Navbar() {
           Sign Up
         </Link>
       </>
-    )
+    );
   } else {
     content = (
       <>
@@ -48,7 +47,7 @@ function Navbar() {
           Log out
         </button>
       </>
-    )
+    );
   }
 
   return (
@@ -60,7 +59,7 @@ function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

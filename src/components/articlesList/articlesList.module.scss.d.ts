@@ -1,1 +1,1 @@
-export const articlesList: string
+export const articlesList: string;

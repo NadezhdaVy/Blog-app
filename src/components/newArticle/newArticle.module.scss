@@ -1,9 +1,9 @@
 .newArticleContainer {
-  composes: formContainer from '../../styles/form.scss';
-}
+	composes: formContainer from '../../styles/form.scss';
+ }
 
 .newArticleMain {
-  composes: formMain from '../../styles/form.scss';
+composes: formMain from '../../styles/form.scss';
   max-width: fit-content;
 
   .deleteButton {
@@ -24,7 +24,7 @@
   .buttonAdd {
     position: absolute;
     bottom: 52px;
-    left: 27em;
+    left: 31.5em;
     width: 100px;
     height: 35px;
     border-color: rgba(24, 144, 255, 1);
@@ -42,7 +42,7 @@
   .newArticle {
     .newArticleInput {
       padding: 0.5em;
-      min-width: 600px;
+      min-width: 550px;
     }
 
     .submitButton {

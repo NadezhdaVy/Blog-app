@@ -1,68 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { Spin } from 'antd'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Spin } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { Article } from '../../ts/interfaces'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import ErrorIndicator from '../errorIndicator'
-import { clearArticlesState } from '../../redux/slices/articlesSlice'
-import { getResource } from '../../api/api'
-import ArticlesItem from '../articlesItem'
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { getResource } from '@/api/api';
+import { clearArticlesState } from '@/redux/slices/articlesSlice';
+import { Article } from '@/ts/interfaces';
+import ErrorIndicator from '@/components/errorIndicator';
+import ArticlesItem from '@/components/articlesItem';
 
-import styles from './articleDetails.module.scss'
+import styles from './articleDetails.module.scss';
 
 function ArticleDetails() {
-  const params = useParams()
-  const { slug } = params
+  const params = useParams();
+  const { slug } = params;
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const [currentArticle, setCurrentArtticle] = useState<null | Article>(null)
-  const [error, setError] = useState<null | Error>(null)
-  const [loading, setLoading] = useState(true)
-  const { status } = useAppSelector((state) => state.articles)
-  const { userInfo, userToken } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [currentArticle, setCurrentArticle] = useState<null | Article>(null);
+  const [error, setError] = useState<null | Error>(null);
+  const [loading, setLoading] = useState(true);
+  const { status } = useAppSelector((state) => state.articles);
+  const { userInfo } = useAppSelector((state) => state.auth);
 
   async function getCurrentArticle() {
-    if (!slug || !userToken) {
-      throw new Error('no slug')
+    if (!slug) {
+      throw new Error('no slug');
     }
     try {
-      setLoading(true)
-      const response = await getResource(slug, userToken)
-      setCurrentArtticle(response)
+      setLoading(true);
+      const response = await getResource(slug);
+      setCurrentArticle(response);
     } catch (e) {
-      const err = e as Error
-      setError(err)
+      const err = e as Error;
+      setError(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    getCurrentArticle()
-  }, [])
+    getCurrentArticle();
+  }, []);
 
   useEffect(() => {
     if (status === 'succeeded') {
-      dispatch(clearArticlesState())
-      navigate('/')
+      dispatch(clearArticlesState());
+      navigate('/');
     }
-  }, [status])
+  }, [status]);
 
   if (loading) {
-    return <Spin size="large" className={styles.spinner} />
+    return <Spin size="large" className={styles.spinner} />;
   }
 
   const err = () => {
-    setTimeout(() => navigate('/'), 1000)
-  }
+    setTimeout(() => navigate('/'), 1000);
+  };
 
   if (error || !currentArticle) {
-    err()
-    return <ErrorIndicator error="The Article was not found" />
+    err();
+    return <ErrorIndicator error="The Article was not found" />;
   }
 
   return (
@@ -76,7 +76,7 @@ function ArticleDetails() {
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentArticle.body}</ReactMarkdown>
       </div>
     </div>
-  )
+  );
 }
 
-export default ArticleDetails
+export default ArticleDetails;

@@ -1,3 +1,3 @@
-import ArticlesItem from './articlesItem'
+import ArticlesItem from './articlesItem';
 
-export default ArticlesItem
+export default ArticlesItem;

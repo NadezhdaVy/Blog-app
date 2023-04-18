@@ -1,5 +1,5 @@
-import format from 'date-fns/format'
+import format from 'date-fns/format';
 
-const convertTime = (date: string) => format(new Date(date), 'MMM dd, YYY')
+const convertTime = (date: string) => format(new Date(date), 'MMM dd, YYY');
 
-export default convertTime
+export default convertTime;

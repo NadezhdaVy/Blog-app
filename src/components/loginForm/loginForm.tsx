@@ -1,35 +1,36 @@
-import React, { useEffect } from 'react'
-import { Button, Form, Input } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
+import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../redux/store'
-import { signUp } from '../../router/routePaths'
-import ErrorIndicator from '../errorIndicator'
-import { loginUser, clearState } from '../../redux/slices/authSlice'
-import { LogInData } from '../../ts/types'
+import { useAppDispatch, useAppSelector } from '@/redux/store';
+import { loginUser, clearState } from '@/redux/slices/authSlice';
+import { LogInData } from '@/ts/types';
 
-import styles from './loginForm.module.scss'
+import { signUp } from '../../router/routePaths';
+import ErrorIndicator from '../errorIndicator';
+
+import styles from './loginForm.module.scss';
 
 function LoginForm() {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { status, error } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { status, error } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(clearState())
-  }, [])
+    dispatch(clearState());
+  }, []);
 
   useEffect(() => {
     if (status === 'succeeded') {
-      dispatch(clearState)
-      navigate('/')
+      dispatch(clearState);
+      navigate('/');
     }
-  }, [status])
+  }, [status]);
 
   const onFinish = (values: LogInData) => {
-    dispatch(loginUser(values))
-  }
-  const errorMessage = error ? <ErrorIndicator error={error} /> : null
+    dispatch(loginUser(values));
+  };
+  const errorMessage = error ? <ErrorIndicator error={error} /> : null;
 
   return (
     <>
@@ -87,6 +88,6 @@ function LoginForm() {
         </div>
       </div>
     </>
-  )
+  );
 }
-export default LoginForm
+export default LoginForm;
